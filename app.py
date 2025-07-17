@@ -28,7 +28,7 @@ def create_database_schema():
     try:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS platforms (
-                platform_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                id INTEGER PRIMARY KEY AUTOINCREMENT, 
                 name TEXT, 
                 url TEXT
             )
@@ -36,7 +36,7 @@ def create_database_schema():
 
         cur.execute("""
             CREATE TABLE IF NOT EXISTS applications (
-                application_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 application_date DATETIME,
                 company TEXT,
                 role TEXT,
@@ -51,8 +51,8 @@ def create_database_schema():
                 feedback_id INTEGER,
                 feedback_date DATETIME,
                 observation TEXT,
-                FOREIGN KEY (platform_id) REFERENCES platforms(platform_id),
-                FOREIGN KEY (feedback_id) REFERENCES feedbacks_definition(feedback_id)
+                FOREIGN KEY (platform_id) REFERENCES platforms(id),
+                FOREIGN KEY (feedback_id) REFERENCES feedbacks_definition(id)
             )
         """)
 
@@ -60,29 +60,29 @@ def create_database_schema():
             CREATE TABLE IF NOT EXISTS steps (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 application_id INTEGER,
-                step INTEGER,
-                step_observation TEXT,
+                step_id INTEGER,
+                observation TEXT,
                 step_date DATETIME,
-                FOREIGN KEY (application_id) REFERENCES applications(application_id) ON DELETE CASCADE,
-                FOREIGN KEY (step) REFERENCES steps_definition(step)
+                FOREIGN KEY (application_id) REFERENCES applications(id) ON DELETE CASCADE,
+                FOREIGN KEY (step_id) REFERENCES steps_definition(id)
             )
         """)
 
         cur.execute("""
             CREATE TABLE IF NOT EXISTS steps_definition (
-                step INTEGER PRIMARY KEY,
-                step_name TEXT,
-                step_description TEXT,
-                step_color TEXT
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                description TEXT,
+                color TEXT
             )
         """)
 
         cur.execute("""
             CREATE TABLE IF NOT EXISTS feedbacks_definition (
-                feedback_id INTEGER PRIMARY KEY,
-                feedback_name TEXT,
-                feedback_description TEXT, 
-                feedback_color TEXT
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                description TEXT, 
+                color TEXT
             )
         """)
 
@@ -101,8 +101,10 @@ def insert_example():
     cur = con.cursor()
 
     cur.execute("INSERT INTO platforms (name, url) VALUES ('Linkedin', 'https://linkedin.com')")
-    cur.execute("INSERT INTO feedbacks_definition (feedback_name, feedback_description, feedback_color) VALUES ('Assessment failed', 'Assessment failed description', '#ffffff')")
-    cur.execute("INSERT INTO applications (application_date, company, role, platform_id, salary_range_min, salary_range_max, expected_salary, salary_offer, last_step, last_step_date, mode, feedback_id, feedback_date, observation) VALUES ('2025-07-16', 'Company Test', 'Data Engineer', 1, 50, 100, 60, 50, 6, '2025-07-16', 'pasive', 1, '2025-07-16', 'test application')")
+    cur.execute("INSERT INTO feedbacks_definition (name, description, color) VALUES ('Assessment failed', 'Assessment failed description', '#ffffff')")
+    cur.execute("INSERT INTO steps_definition (id, name, description, color) VALUES (1, 'Application Submitted', 'Initial application submitted to company', '#3498db')")
+    cur.execute("INSERT INTO applications (application_date, company, role, platform_id, salary_range_min, salary_range_max, expected_salary, salary_offer, last_step, last_step_date, mode, feedback_id, feedback_date, observation) VALUES ('2025-07-16', 'Company Test', 'Data Engineer', 1, 50, 100, 60, 50, 1, '2025-07-16', 'pasive', 1, '2025-07-16', 'test application')")
+    cur.execute("INSERT INTO steps (application_id, step_id, observation, step_date) VALUES (1, 1, 'Applied through company website', '2025-07-10')")
     con.commit()
     con.close()
 
@@ -111,7 +113,7 @@ def view_application(application_id):
     con = get_database_connection()
     cur = con.cursor()
 
-    cur.execute("SELECT * FROM applications WHERE application_id = ?", [application_id])
+    cur.execute("SELECT * FROM applications WHERE id = ?", [application_id])
     application = cur.fetchone()
 
     if application is None:
@@ -145,27 +147,15 @@ def platforms():
         return redirect(url_for('platforms'))
 
 @app.route('/platforms/<int:platform_id>/check_applications', methods=['GET'])
-def check_applications(platform_id):
+def check_platform_applications(platform_id):
     con = get_database_connection()
     cur = con.cursor()
     
-    cur.execute("SELECT COUNT(*) FROM applications WHERE platform_id = ?", (platform_id,))
+    cur.execute("SELECT COUNT(*) FROM applications WHERE platform_id = ?", [platform_id])
     count = cur.fetchone()[0]
     
     con.close()
     return {'count': count}
-
-@app.route('/platforms/<int:platform_id>/delete', methods=['POST'])
-def delete_platform(platform_id):
-
-    con = get_database_connection()
-    cur = con.cursor()
-
-    cur.execute("DELETE FROM applications WHERE platform_id = ?", [platform_id])
-    cur.execute("DELETE FROM platforms WHERE platform_id = ?", [platform_id])
-    con.commit()
-    con.close()
-    return redirect(url_for('platforms'))
 
 @app.route('/platforms/<int:platform_id>/update', methods=['POST'])
 def update_platform(platform_id):
@@ -176,12 +166,146 @@ def update_platform(platform_id):
     con = get_database_connection()
     cur = con.cursor()
 
-    cur.execute("UPDATE platforms SET name = ?, url = ? WHERE platform_id = ?", (name, url, platform_id))
+    cur.execute("UPDATE platforms SET name = ?, url = ? WHERE id = ?", (name, url, platform_id))
     con.commit()
     con.close()
     return redirect(url_for('platforms'))
 
+@app.route('/platforms/<int:platform_id>/delete', methods=['POST'])
+def delete_platform(platform_id):
+
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("DELETE FROM applications WHERE platform_id = ?", [platform_id])
+    cur.execute("DELETE FROM platforms WHERE id = ?", [platform_id])
+    con.commit()
+    con.close()
+    return redirect(url_for('platforms'))
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    if request.method == "GET":
+        con = get_database_connection()
+        cur = con.cursor()
+
+        cur.execute("SELECT * FROM feedbacks_definition")
+        feedbacks = cur.fetchall()
+
+        cur.execute("SELECT * FROM steps_definition")
+        steps = cur.fetchall()
+
+        con.close()
+        return render_template('settings.html', feedbacks=feedbacks, steps=steps)
+    
+    if request.method == "POST":
+
+        form_type = request.form.get('form_type')
+        if form_type == 'create_step_defition':
+
+            name = request.form.get('step_name')
+            description = request.form.get('step_description')
+            color = request.form.get('step_color')
+
+            con = get_database_connection()
+            cur = con.cursor()
+
+            cur.execute("INSERT INTO steps_definition (name, description, color) VALUES(?, ?, ?)", (name, description, color))
+            con.commit()
+            con.close()
+            return redirect(url_for('settings'))
+
+        elif form_type == 'create_feedback_defition':
+
+            name = request.form.get('feedback_name')
+            description = request.form.get('feedback_description')
+            color = request.form.get('feedback_color')
+
+            con = get_database_connection()
+            cur = con.cursor()
+
+            cur.execute("INSERT INTO feedbacks_definition (name, description, color) VALUES(?, ?, ?)", (name, description, color))
+            con.commit()
+            con.close()
+            return redirect(url_for('settings'))
+
+@app.route('/settings/steps/<int:step_id>/check_applications', methods=['GET'])
+def check_steps_applications(step_id):
+    con = get_database_connection()
+    cur = con.cursor()
+    
+    cur.execute("SELECT COUNT(DISTINCT application_id) FROM steps WHERE step_id = ?", [step_id])
+    count = cur.fetchone()[0]
+    
+    con.close()
+    return {'count': count}
+
+@app.route('/settings/steps/<int:step_id>/update', methods=['POST'])
+def update_step_definition(step_id):
+
+    name = request.form.get('step_name')
+    description = request.form.get('step_description')
+    color = request.form.get('step_color')
+
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("UPDATE steps_definition SET name = ?, description = ?, color = ? WHERE id = ?", (name, description, color, step_id))
+    con.commit()
+    con.close()
+    return redirect(url_for('settings'))
+
+@app.route('/settings/steps/<int:step_id>/delete', methods=['POST'])
+def delete_step_definition(step_id):
+
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("DELETE FROM applications WHERE id IN (SELECT application_id FROM steps WHERE step_id = ?)", [step_id])
+    cur.execute("DELETE FROM steps_definition WHERE id = ?", [step_id])
+    con.commit()
+    con.close()
+    return redirect(url_for('settings'))
+
+@app.route('/settings/feedbacks/<int:feedback_id>/check_applications', methods=['GET'])
+def check_feedbacks_applications(feedback_id):
+    con = get_database_connection()
+    cur = con.cursor()
+    
+    cur.execute("SELECT COUNT(*) FROM applications WHERE feedback_id = ?", [feedback_id])
+    count = cur.fetchone()[0]
+    
+    con.close()
+    return {'count': count}
+
+@app.route('/settings/feedbacks/<int:feedback_id>/update', methods=['POST'])
+def update_feedback_definition(feedback_id):
+
+    name = request.form.get('feedback_name')
+    description = request.form.get('feedback_description')
+    color = request.form.get('feedback_color')
+
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("UPDATE feedbacks_definition SET name = ?, description = ?, color = ? WHERE id = ?", (name, description, color, feedback_id))
+    con.commit()
+    con.close()
+    return redirect(url_for('settings'))
+
+@app.route('/settings/feedbacks/<int:feedback_id>/delete', methods=['POST'])
+def delete_feedback_definition(feedback_id):
+
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("DELETE FROM applications WHERE feedback_id = ?", [feedback_id])
+    cur.execute("DELETE FROM feedbacks_definition WHERE id = ?", [feedback_id])
+    con.commit()
+    con.close()
+    return redirect(url_for('settings'))
+
 if __name__ == '__main__':
-    create_database_schema()
-    insert_example()
+    #create_database_schema()
+    #insert_example()
     app.run(debug=True, host='0.0.0.0', port=5000)

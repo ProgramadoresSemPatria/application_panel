@@ -1,52 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %}Application Details - Job Tracker{% endblock %}
+{% block title %}Platforms Details - Job Tracker{% endblock %}
 
 {% block content %}
-    <h3 class="box_title">Platforms Administration</h3>
-    <div class="glass-container">
-        <form method="post" class="form_platforms">
-            <input type="text" id="platform_name" name="platform_name" placeholder="Platform Name" class="form-input"><br>
-            <input type="text" id="platform_url" name="platform_url" placeholder="Platform URL" class="form-input"><br>
-            <button type="submit" class="btn-primary" id="createPlatformBtn" disabled>Insert Platform</button>
-        </form>
-    </div>
-    <div class="fixed-header">
-        <table class="header-table">
-            <tr class="tab-header">
-                <th>Id</th>
-                <th>Platform Name</th>
-                <th>Platform URL</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </table>
-    </div>
-    <div class="glass-container-tab">
-        <table class="tab-platforms">
-            {% for platform in platforms %}
-                <tr class="tab-body">
-                    <td>{{platform.platform_id}}</td>
-                    <td>{{platform.name}}</td>
-                    <td>{{platform.url}}</td>
-                    <td>
-                        <i class="fa-solid fa-pen-to-square edit-btn" 
-                            style="color: #13ecab; cursor: pointer;" 
-                            data-platform-id="{{platform.platform_id}}"
-                            data-platform-name="{{platform.name}}"
-                            data-platform-url="{{platform.url}}">
-                        </i>
-                    </td>
-                    <td>
-                        <i class="fa-solid fa-trash delete-btn" 
-                           style="color: #5315d0; cursor: pointer;" 
-                           data-platform-id="{{platform.platform_id}}"
-                           data-platform-name="{{platform.name}}">
-                        </i>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+    <div class="platform-box">
+        <div class="item-platform">
+            <h3 class="box_title">Platforms Administration</h3>
+            <div class="glass-container">
+                <form method="post" class="form_platforms">
+                    <input type="text" id="platform_name" name="platform_name" placeholder="Platform Name" class="form-input"><br>
+                    <input type="text" id="platform_url" name="platform_url" placeholder="Platform URL" class="form-input"><br>
+                    <button type="submit" class="btn-primary" id="createPlatformBtn" disabled>Insert Platform</button>
+                </form>
+            </div>
+            <div class="fixed-header">
+                <table class="header-table">
+                    <tr class="tab-header">
+                        <th>Id</th>
+                        <th>Platform Name</th>
+                        <th>Platform URL</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="glass-container-tab">
+                <table class="tab-platforms">
+                    {% for platform in platforms %}
+                        <tr class="tab-body">
+                            <td>{{platform.id}}</td>
+                            <td>{{platform.name}}</td>
+                            <td>{{platform.url}}</td>
+                            <td>
+                                <i class="fa-solid fa-pen-to-square edit-btn" 
+                                    style="color: #13ecab; cursor: pointer;" 
+                                    data-platform-id="{{platform.id}}"
+                                    data-platform-name="{{platform.name}}"
+                                    data-platform-url="{{platform.url}}">
+                                </i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-trash delete-btn" 
+                                   style="color: #5315d0; cursor: pointer;" 
+                                   data-platform-id="{{platform.id}}"
+                                   data-platform-name="{{platform.name}}">
+                                </i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
 
     <div id="editModal" class="modal">
@@ -185,11 +189,11 @@
     const platformNameInput = document.getElementById('platform_name');
     const platformUrlInput = document.getElementById('platform_url');
     const createPlatformBtn = document.getElementById('createPlatformBtn');
-    
+
     function validateCreateForm() {
         const nameValue = platformNameInput.value.trim();
         const urlValue = platformUrlInput.value.trim();
-        
+
         // Enable button only if both fields have text
         if (nameValue.length > 0 && urlValue.length > 0) {
             createPlatformBtn.disabled = false;
@@ -197,11 +201,11 @@
             createPlatformBtn.disabled = true;
         }
     }
-    
+
     // Add event listeners to both inputs
     platformNameInput.addEventListener('input', validateCreateForm);
     platformUrlInput.addEventListener('input', validateCreateForm);
-    
+
     // Initial validation check
     validateCreateForm();
 </script>

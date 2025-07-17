@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Job Tracker{% endblock %}
+
+{% block content %}
+    <div class="setting-box">
+        <div class="item-setting">
+            <h3 class="box_title">Steps Settings</h3>
+            <div class="glass-container-settings">
+                <form method="post" class="form_steps_definition">
+                    <input type="hidden" name="form_type" value="create_step_defition">
+                    <input type="text" id="step_name" name="step_name" placeholder="Step Name" class="form-input-settings"><br>
+                    <input type="text" id="step_description" name="step_description" placeholder="Step Description" class="form-input-settings"><br>
+                    <input type="color" id="step_color" name="step_color" class="form-color-settings" value="#5315d0"><br>
+                    <button type="submit" class="btn-primary" id="createStepBtn" disabled>Insert Step</button>
+                </form>
+            </div>
+            <div class="fixed-header">
+                <table class="header-table">
+                    <tr class="tab-header-settings">
+                        <th>Id</th>
+                        <th>Step Name</th>
+                        <th>Step Description</th>
+                        <th>Step Color</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="glass-container-tab-settings">
+                <table class="tab-platforms">
+                    {% for step in steps %}
+                        <tr class="tab-body-settings">
+                            <td>{{step.id}}</td>
+                            <td>{{step.name}}</td>
+                            <td>{{step.description}}</td>
+                            <td style="color: {{step.color}};">{{step.color}}</td>
+                            <td>
+                                <i class="fa-solid fa-pen-to-square edit-btn" 
+                                    style="color: #13ecab; cursor: pointer;" 
+                                    data-step-id="{{step.id}}"
+                                    data-step-name="{{step.name}}"
+                                    data-step-description="{{step.description}}"
+                                    data-step-color="{{step.color}}">
+                                </i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-trash delete-btn" 
+                                   style="color: #5315d0; cursor: pointer;" 
+                                   data-step-id="{{step.id}}"
+                                    data-step-name="{{step.name}}"
+                                    data-step-description="{{step.description}}"
+                                    data-step-color="{{step.color}}">
+                                </i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="item-setting">
+            <h3 class="box_title">Feedbacks Settings</h3>
+            <div class="glass-container-settings">
+                <form method="post" class="form_steps_definition">
+                    <input type="hidden" name="form_type" value="create_feedback_defition">
+                    <input type="text" id="feedback_name" name="feedback_name" placeholder="Feedback Name" class="form-input-settings"><br>
+                    <input type="text" id="feedback_description" name="feedback_description" placeholder="Feedback Description" class="form-input-settings"><br>
+                    <input type="color" id="feedback_color" name="feedback_color" class="form-color-settings" value="#5315d0"><br>
+                    <button type="submit" class="btn-primary" id="createFeedBtn" disabled>Insert Feedback</button>
+                </form>
+            </div>
+            <div class="fixed-header">
+                <table class="header-table">
+                    <tr class="tab-header-settings">
+                        <th>Id</th>
+                        <th>Feedback Name</th>
+                        <th>Feedback Description</th>
+                        <th>Feedback Color</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="glass-container-tab-settings">
+                <table class="tab-platforms">
+                    {% for feedback in feedbacks %}
+                        <tr class="tab-body-settings">
+                            <td>{{feedback.id}}</td>
+                            <td>{{feedback.name}}</td>
+                            <td>{{feedback.description}}</td>
+                            <td style="color: {{feedback.color}};">{{feedback.color}}</td>
+                            <td>
+                                <i class="fa-solid fa-pen-to-square edit-btnF" 
+                                    style="color: #13ecab; cursor: pointer;" 
+                                    data-feedback-id="{{feedback.id}}"
+                                    data-feedback-name="{{feedback.name}}"
+                                    data-feedback-description="{{feedback.description}}"
+                                    data-feedback-color="{{feedback.color}}">
+                                </i>
+                            </td>
+                            <td>
+                                <i class="fa-solid fa-trash delete-btnF" 
+                                   style="color: #5315d0; cursor: pointer;" 
+                                   data-feedback-id="{{feedback.id}}"
+                                    data-feedback-name="{{feedback.name}}"
+                                    data-feedback-description="{{feedback.description}}"
+                                    data-feedback-color="{{feedback.color}}">
+                                </i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModalStep" class="modal">
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h3>Edit Step Definition</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="editFormStep" method="post" class="form_platforms">
+                <input type="text" id="edit_step_name" name="step_name" placeholder="Step Name" class="form-input-settings" required>
+                <input type="text" id="edit_step_description" name="step_description" placeholder="Step Description" class="form-input-settings" required>
+                <input type="color" id="edit_step_color" name="step_color" class="form-color-settings">
+                <button type="submit" class="btn-primary">Update Step</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="editModalFeed" class="modal">
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h3>Edit Feedback Definition</h3>
+                <span class="closeF">&times;</span>
+            </div>
+            <form id="editFormFeed" method="post" class="form_platforms">
+                <input type="text" id="edit_feedback_name" name="feedback_name" placeholder="Feedback Name" class="form-input-settings" required>
+                <input type="text" id="edit_feedback_description" name="feedback_description" placeholder="Feedback Description" class="form-input-settings" required>
+                <input type="color" id="edit_feedback_color" name="feedback_color" class="form-color-settings">
+                <button type="submit" class="btn-primary">Update Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteModalStep" class="modal">
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h3>Delete Step Defition</h3>
+                <span class="close-delete">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">Are you sure you want to delete this step?</p>
+                <div id="applicationsWarning" class="warning-message" style="display: none;">
+                    <strong>Warning:</strong> This will also delete <span id="applicationCount"></span> application(s) linked to this steps definition.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelDelete">Cancel</button>
+                <form id="deleteFormStep" method="post" style="display: inline;">
+                    <button type="submit" class="btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModalFeed" class="modal">
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h3>Edit Feedback Definition</h3>
+                <span class="closeF">&times;</span>
+            </div>
+            <form id="editFormFeed" method="post" class="form_platforms">
+                <input type="text" id="edit_feedback_name" name="feedback_name" placeholder="Feedback Name" class="form-input-settings" required>
+                <input type="text" id="edit_feedback_description" name="feedback_description" placeholder="Feedback Description" class="form-input-settings" required>
+                <input type="color" id="edit_feedback_color" name="feedback_color" class="form-color-settings">
+                <button type="submit" class="btn-primary">Update Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteModalFeed" class="modal">
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h3>Delete Feedback Defition</h3>
+                <span class="close-deleteF">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessageF">Are you sure you want to delete this step?</p>
+                <div id="applicationsWarningF" class="warning-message" style="display: none;">
+                    <strong>Warning:</strong> This will also delete <span id="applicationCountF"></span> application(s) linked to this feedback definition.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelDeleteF">Cancel</button>
+                <form id="deleteFormFeed" method="post" style="display: inline;">
+                    <button type="submit" class="btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('editModalStep');
+        const editForm = document.getElementById('editFormStep');
+        const closeBtn = document.querySelector('.close');
+        const editButtons = document.querySelectorAll('.edit-btn');
+
+        // Open modal when edit button is clicked
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const stepId = this.dataset.stepId;
+                const stepName = this.dataset.stepName;
+                const stepDescription = this.dataset.stepDescription;
+                const stepColor = this.dataset.stepColor;
+                
+                // Set form action to update route
+                editForm.action = `/settings/steps/${stepId}/update`;
+
+                // Populate form fields
+                document.getElementById('edit_step_name').value = stepName;
+                document.getElementById('edit_step_description').value = stepDescription;
+                document.getElementById('edit_step_color').value = stepColor;
+                // Show modal
+                modal.classList.add('show');
+            });
+        });
+
+        // Close modal when X is clicked
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalF = document.getElementById('editModalFeed');
+        const editFormF = document.getElementById('editFormFeed');
+        const closeBtnF = document.querySelector('.closeF');
+        const editButtonsF = document.querySelectorAll('.edit-btnF');
+
+        // Open modal when edit button is clicked
+        editButtonsF.forEach(button => {
+            button.addEventListener('click', function() {
+                const feedbackId = this.dataset.feedbackId;
+                const feedbackName = this.dataset.feedbackName;
+                const feedbackDescription = this.dataset.feedbackDescription;
+                const feedbackColor = this.dataset.feedbackColor;
+                
+                // Set form action to update route
+                editFormF.action = `/settings/feedbacks/${feedbackId}/update`;
+
+                // Populate form fields
+                document.getElementById('edit_feedback_name').value = feedbackName;
+                document.getElementById('edit_feedback_description').value = feedbackDescription;
+                document.getElementById('edit_feedback_color').value = feedbackColor;
+                // Show modal
+                modalF.classList.add('show');
+            });
+        });
+
+        // Close modal when X is clicked
+        closeBtnF.addEventListener('click', function() {
+            modalF.classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modalF) {
+                modalF.classList.remove('show');
+            }
+        });
+    });
+</script>
+
+<script>
+    const deleteModal = document.getElementById('deleteModalStep');
+    const deleteForm = document.getElementById('deleteFormStep');
+    const closeDeleteBtn = document.querySelector('.close-delete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const applicationsWarning = document.getElementById('applicationsWarning');
+    const applicationCount = document.getElementById('applicationCount');
+
+    // Open delete modal when delete button is clicked
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const stepId = this.dataset.stepId;
+            const stepName = this.dataset.stepName;
+
+            // Set form action to delete route
+            deleteForm.action = `/settings/steps/${stepId}/delete`;
+
+            // Update message with platform name
+            document.getElementById('deleteMessage').textContent = 
+                `Are you sure you want to delete "${stepName}"?`;
+
+            // Check for linked applications
+            fetch(`/settings/steps/${stepId}/check_applications`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.count > 0) {
+                        applicationCount.textContent = data.count;
+                        applicationsWarning.style.display = 'block';
+                    } else {
+                        applicationsWarning.style.display = 'none';
+                    }
+                });
+
+            // Show modal
+            deleteModal.classList.add('show');
+        });
+    });
+
+    // Close delete modal
+    closeDeleteBtn.addEventListener('click', function() {
+        deleteModal.classList.remove('show');
+    });
+
+    cancelDeleteBtn.addEventListener('click', function() {
+        deleteModal.classList.remove('show');
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === deleteModal) {
+            deleteModal.classList.remove('show');
+        }
+    });
+</script>
+
+<script>
+    const deleteModalF = document.getElementById('deleteModalFeed');
+    const deleteFormF = document.getElementById('deleteFormFeed');
+    const closeDeleteBtnF = document.querySelector('.close-deleteF');
+    const cancelDeleteBtnF = document.getElementById('cancelDeleteF');
+    const deleteButtonsF = document.querySelectorAll('.delete-btnF');
+    const applicationsWarningF = document.getElementById('applicationsWarningF');
+    const applicationCountF = document.getElementById('applicationCountF');
+
+    // Open delete modal when delete button is clicked
+    deleteButtonsF.forEach(button => {
+        button.addEventListener('click', function() {
+            const feedbackId = this.dataset.feedbackId;
+            const feedbackName = this.dataset.feedbackName;
+
+            // Set form action to delete route
+            deleteFormF.action = `/settings/feedbacks/${feedbackId}/delete`;
+
+            // Update message with platform name
+            document.getElementById('deleteMessageF').textContent = 
+                `Are you sure you want to delete "${feedbackName}"?`;
+
+            // Check for linked applications
+            fetch(`/settings/feedbacks/${feedbackId}/check_applications`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.count > 0) {
+                        applicationCountF.textContent = data.count;
+                        applicationsWarningF.style.display = 'block';
+                    } else {
+                        applicationsWarningF.style.display = 'none';
+                    }
+                });
+
+            // Show modal
+            deleteModalF.classList.add('show');
+        });
+    });
+
+    // Close delete modal
+    closeDeleteBtnF.addEventListener('click', function() {
+        deleteModalF.classList.remove('show');
+    });
+
+    cancelDeleteBtnF.addEventListener('click', function() {
+        deleteModalF.classList.remove('show');
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === deleteModalF) {
+            deleteModalF.classList.remove('show');
+        }
+    });
+</script>
+
+<script>
+    const stepNameInput = document.getElementById('step_name');
+    const stepDescriptionInput = document.getElementById('step_description');
+    const createStepBtn = document.getElementById('createStepBtn');
+
+    function validateCreateForm() {
+        const nameValue = stepNameInput.value.trim();
+        const descriptionValue = stepDescriptionInput.value.trim();
+
+        // Enable button only if both fields have text
+        if (nameValue.length > 0 && descriptionValue.length > 0) {
+            createStepBtn.disabled = false;
+        } else {
+            createStepBtn.disabled = true;
+        }
+    }
+
+    // Add event listeners to both inputs
+    stepNameInput.addEventListener('input', validateCreateForm);
+    stepDescriptionInput.addEventListener('input', validateCreateForm);
+
+    // Initial validation check
+    validateCreateForm();
+</script>
+
+<script>
+    const feedbackNameInput = document.getElementById('feedback_name');
+    const feedbackDescriptionInput = document.getElementById('feedback_description');
+    const createFeedBtn = document.getElementById('createFeedBtn');
+
+    function validateCreateForm() {
+        const nameValue = feedbackNameInput.value.trim();
+        const descriptionValue = feedbackDescriptionInput.value.trim();
+
+        // Enable button only if both fields have text
+        if (nameValue.length > 0 && descriptionValue.length > 0) {
+            createFeedBtn.disabled = false;
+        } else {
+            createFeedBtn.disabled = true;
+        }
+    }
+
+    // Add event listeners to both inputs
+    feedbackNameInput.addEventListener('input', validateCreateForm);
+    feedbackDescriptionInput.addEventListener('input', validateCreateForm);
+
+    // Initial validation check
+    validateCreateForm();
+</script>
+{% endblock %}

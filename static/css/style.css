@@ -119,12 +119,18 @@ body {
 /* Main Content */
 .main-content {
     flex: 1;
-    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0;
     min-height: calc(100vh - 140px);
 }
 
 .content-container {
-    max-width: 1200px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
     align-items: center;
@@ -142,8 +148,55 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+.glass-container-settings {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 10px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.setting-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Full viewport height */ /* Space between the divs */
+    padding: 1rem;
+}
+
+.item-setting {
+    width: 100%;
+    flex: 1;
+}
+
+.platform-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Full viewport height */ /* Space between the divs */
+    padding: 1rem;
+}
+
+.item-platform{
+    width: 100%;
+    flex: 1;
+}
+
+
 .glass-container-tab {
     max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-container-tab-settings {
+    max-height: 150px;
     overflow-y: auto;
     overflow-x: hidden;
     backdrop-filter: blur(20px);
@@ -168,6 +221,11 @@ body {
     justify-content: space-between;
 }
 
+.form_steps_definition{
+    display: flex;
+    justify-content: space-between;
+}
+
 .form-input{
     width: 40%;
     height: 40px;
@@ -188,6 +246,58 @@ body {
 .form-input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
+
+.form-input-settings{
+    width: 35%;
+    height: 40px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-input-settings:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-input-settings::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-color-settings{
+    width: 10%;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-color-settings:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#step_color {
+    -webkit-appearance: none;
+    padding: 0;
+    border-radius: 8px;
+  }
+  #step_color::-webkit-color-swatch {
+    border-radius: 8px;
+    padding: 0;
+  }
+  #step_color::-webkit-color-swatch-wrapper {
+    border-radius: 8px;
+    padding: 2px;
+  }
 
 .btn-primary {
     background: rgba(19, 236, 171);
@@ -254,7 +364,25 @@ body {
     text-align: center;
 }
 
-/* Body Rows */
+.tab-header-settings {
+    display: grid;
+    grid-template-columns: 2fr 3fr 4fr 2fr 1fr 1fr;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    
+}
+
+.tab-header-settings th {
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
 .tab-body {
     display: grid;
     grid-template-columns: 2fr 3fr 3fr 1fr 1fr;
@@ -279,9 +407,81 @@ body {
     text-align: center;
 }
 
-.glass-container-tab::-webkit-scrollbar {
-    display: none;
+.tab-body-settings {
+    display: grid;
+    grid-template-columns: 2fr 3fr 4fr 2fr 1fr 1fr;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.tab-body-settings:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1.01);
+}
+
+.tab-body-settings:last-child {
+    border-bottom: none;
+}
+
+.tab-body-settings td {
+    padding: 1rem 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.glass-container-tab::-webkit-scrollbar {
+    width: 8px;
+ }
+ 
+ .glass-container-tab::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin: 8px 0;
+ }
+ 
+ .glass-container-tab::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ 
+ .glass-container-tab::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+ }
+ 
+ .glass-container-tab::-webkit-scrollbar-corner {
+    background: transparent;
+ }
+
+ .glass-container-tab-settings::-webkit-scrollbar {
+    width: 8px;
+ }
+ 
+ .glass-container-tab-settings::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin: 8px 0;
+ }
+ 
+ .glass-container-tab-settings::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ 
+ .glass-container-tab-settings::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+ }
+ 
+ .glass-container-tab-settings::-webkit-scrollbar-corner {
+    background: transparent;
+ }
 
 .modal {
     display: none;
@@ -335,6 +535,18 @@ body {
 }
 
 .close:hover {
+    color: #ffffff;
+}
+
+.closeF {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.closeF:hover {
     color: #ffffff;
 }
 
@@ -396,6 +608,13 @@ body {
     background: rgba(220, 53, 69, 1);
 }
 
+.close-delete {
+    cursor: pointer;
+}
+
+.close-deleteF {
+    cursor: pointer;
+}
 
 /* Animation */
 @keyframes modalSlideIn {
@@ -420,7 +639,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-    padding: 0 2rem;
+    padding: 0 1rem;
 }
 
 .footer-text {
