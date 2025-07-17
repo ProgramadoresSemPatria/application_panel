@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Job Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo Section -->
+            <div class="logo">
+                <a href="">
+                    <img src="{{ url_for('static', filename='images/app-logo.webp') }}">
+                </a>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Platforms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Feedbacks</a>
+                    </li>
+                </ul>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="content-container">
+            {% block content %}
+            <!-- Page-specific content will be inserted here -->
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-text">
+                Coded by 
+                <a href="https://github.com/brxnnox" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    @brxnnox
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript Block for page-specific scripts -->
+    {% block scripts %}
+    {% endblock %}
+    
+    <!-- Base JavaScript for mobile menu functionality -->
+    <script src="https://kit.fontawesome.com/968be355d7.js" crossorigin="anonymous"></script>
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const navList = document.querySelector('.nav-list');
+            
+            if (mobileToggle && navList) {
+                mobileToggle.addEventListener('click', function() {
+                    navList.classList.toggle('nav-list-active');
+                    mobileToggle.classList.toggle('mobile-menu-active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
