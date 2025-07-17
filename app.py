@@ -144,6 +144,17 @@ def platforms():
         con.close()
         return redirect(url_for('platforms'))
 
+@app.route('/platforms/<int:platform_id>/check_applications', methods=['GET'])
+def check_applications(platform_id):
+    con = get_database_connection()
+    cur = con.cursor()
+    
+    cur.execute("SELECT COUNT(*) FROM applications WHERE platform_id = ?", (platform_id,))
+    count = cur.fetchone()[0]
+    
+    con.close()
+    return {'count': count}
+
 @app.route('/platforms/<int:platform_id>/delete', methods=['POST'])
 def delete_platform(platform_id):
 
@@ -165,11 +176,12 @@ def update_platform(platform_id):
     con = get_database_connection()
     cur = con.cursor()
 
-    cur.execute("UPDATE SET name = ?, url = ? FROM platforms WHERE platform_id = ?", (name, url, platform_id))
+    cur.execute("UPDATE platforms SET name = ?, url = ? WHERE platform_id = ?", (name, url, platform_id))
     con.commit()
     con.close()
     return redirect(url_for('platforms'))
 
-
 if __name__ == '__main__':
+    create_database_schema()
+    insert_example()
     app.run(debug=True, host='0.0.0.0', port=5000)

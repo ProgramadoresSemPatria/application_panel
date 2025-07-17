@@ -27,7 +27,8 @@
                         <a href="" class="nav-link">Applications</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">Platforms</a>
+                        <a href="{{ url_for('platforms') }}" 
+                        class="nav-link {% if request.endpoint == 'platforms' %}active{% endif %}">Platforms</a>
                     </li>
                     <li class="nav-item">
                         <a href="" class="nav-link">Feedbacks</a>
