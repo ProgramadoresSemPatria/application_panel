@@ -148,6 +148,16 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+.glass-container-application {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 5px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
 .glass-container-settings {
     backdrop-filter: blur(20px);
     background: rgba(255, 255, 255, 0.05);
@@ -483,6 +493,90 @@ body {
     background: transparent;
  }
 
+ .search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Search Section */
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Search Button */
+.btn-search {
+    background: rgba(52, 152, 219, 0.8);
+    border: 1px solid rgba(52, 152, 219, 1);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-search:hover {
+    background: rgba(52, 152, 219, 1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Add Section */
+.add-section {
+    display: flex;
+    align-items: center;
+}
+
+.btn-add {
+    background: rgba(39, 174, 96, 0.8);
+    border: 1px solid rgba(39, 174, 96, 1);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.btn-add:hover {
+    background: rgba(39, 174, 96, 1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+
 .modal {
     display: none;
     position: fixed;
@@ -614,6 +708,259 @@ body {
 
 .close-deleteF {
     cursor: pointer;
+}
+
+.form_applications {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Applications Grid */
+.applications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+}
+
+/* Application Card */
+.application-card {
+    padding: 0.6rem 1rem;
+    transition: all 0.3s ease;
+    min-height: auto;
+}
+
+.application-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Header - 7 fields layout */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-height: 45px;
+}
+
+/* Company Section - Company + Role */
+.company-section {
+    flex: 0 0 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.company-section h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.company-section .role {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Info Section - 5 fields in horizontal layout */
+.info-section {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 90px 80px 70px 60px 80px;
+    gap: 0.75rem;
+    align-items: center;
+    min-width: 0;
+}
+
+.info-section span {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+/* Date */
+.date {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem !important;
+}
+
+/* Platform */
+.platform {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    font-size: 0.7rem !important;
+}
+
+/* Step Badge */
+.step-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.7rem !important;
+    font-weight: 600;
+}
+
+.status-1, .status-2 { background: rgba(243, 156, 18, 0.2); color: #f39c12; }
+.status-3, .status-4 { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+.status-5, .status-6 { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
+.status-7 { background: rgba(39, 174, 96, 0.2); color: #27ae60; }
+.status-8 { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+
+/* Feedback */
+.feedback {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    font-size: 0.7rem !important;
+}
+
+/* Salary */
+.salary {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.8rem !important;
+    background: rgba(39, 174, 96, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    border: 1px solid rgba(39, 174, 96, 0.3);
+}
+
+/* Actions Section */
+.actions-section {
+    flex: 0 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.actions-section i {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.actions-section i:hover {
+    transform: scale(1.1);
+}
+
+.btn-expand-mini {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.6rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-expand-mini:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* Card Details */
+.card-details {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.details-grid span {
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.observation {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Expand Button - Mais discreto */
+.card-expand {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+}
+
+.btn-expand-mini {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-expand-mini:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .applications-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-main-info {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .details-row {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
 }
 
 /* Animation */

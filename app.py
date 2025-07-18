@@ -100,10 +100,10 @@ def insert_example():
     con = get_database_connection()
     cur = con.cursor()
 
-    cur.execute("INSERT INTO platforms (name, url) VALUES ('Linkedin', 'https://linkedin.com')")
-    cur.execute("INSERT INTO feedbacks_definition (name, description, color) VALUES ('Assessment failed', 'Assessment failed description', '#ffffff')")
-    cur.execute("INSERT INTO steps_definition (id, name, description, color) VALUES (1, 'Application Submitted', 'Initial application submitted to company', '#3498db')")
-    cur.execute("INSERT INTO applications (application_date, company, role, platform_id, salary_range_min, salary_range_max, expected_salary, salary_offer, last_step, last_step_date, mode, feedback_id, feedback_date, observation) VALUES ('2025-07-16', 'Company Test', 'Data Engineer', 1, 50, 100, 60, 50, 1, '2025-07-16', 'pasive', 1, '2025-07-16', 'test application')")
+    #cur.execute("INSERT INTO platforms (name, url) VALUES ('Linkedin', 'https://linkedin.com')")
+    #cur.execute("INSERT INTO feedbacks_definition (name, description, color) VALUES ('Assessment failed', 'Assessment failed description', '#ffffff')")
+    #cur.execute("INSERT INTO steps_definition (id, name, description, color) VALUES (1, 'Application Submitted', 'Initial application submitted to company', '#3498db')")
+    cur.execute("INSERT INTO applications (application_date, company, role, platform_id, salary_range_min, salary_range_max, expected_salary, salary_offer, last_step, last_step_date, mode, feedback_id, feedback_date, observation) VALUES ('2025-07-16', 'Company FULL', 'Data Scientist', 1, 50, 100, 60, 50, 1, '2025-07-16', 'pasive', 1, '2025-07-16', 'test application')")
     cur.execute("INSERT INTO steps (application_id, step_id, observation, step_date) VALUES (1, 1, 'Applied through company website', '2025-07-10')")
     con.commit()
     con.close()
@@ -122,6 +122,39 @@ def view_application(application_id):
     
     con.close()
     return render_template('application_detail.html', application=application)
+
+@app.route('/applications', methods=['GET', 'POST'])
+def applications():
+    if request.method == "GET":
+        con = get_database_connection()
+        cur = con.cursor()
+
+        cur.execute("SELECT * FROM applications")
+        applications = cur.fetchall()
+
+        cur.execute("SELECT * FROM platforms")
+        platforms = cur.fetchall()
+
+        cur.execute("SELECT * FROM steps_definition")
+        steps_definition = cur.fetchall()
+
+        cur.execute("SELECT * FROM feedbacks_definition")
+        feedbacks_definition = cur.fetchall()
+
+        con.close()
+        return render_template('applications.html', applications=applications, platforms=platforms, steps_definition=steps_definition, feedbacks_definition=feedbacks_definition)
+    
+    if request.method == "POST":
+        name = request.form.get('platform_name')
+        url = request.form.get('platform_url')
+
+        con = get_database_connection()
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO applications (name, url) VALUES(?, ?)", (name, url))
+        con.commit()
+        con.close()
+        return redirect(url_for('applications'))
 
 @app.route('/platforms', methods=['GET', 'POST'])
 def platforms():
