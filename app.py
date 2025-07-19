@@ -129,7 +129,7 @@ def applications():
         con = get_database_connection()
         cur = con.cursor()
 
-        cur.execute("SELECT * FROM applications")
+        cur.execute("SELECT applications.*, platforms.name as platform_name, steps_definition.name as step_name, steps_definition.color as step_color, feedbacks_definition.name as feedback_name, feedbacks_definition.color as feedback_color FROM applications LEFT JOIN platforms on applications.platform_id = platforms.id LEFT JOIN steps_definition on applications.last_step = steps_definition.id LEFT JOIN feedbacks_definition on applications.feedback_id = feedbacks_definition.id")
         applications = cur.fetchall()
 
         cur.execute("SELECT * FROM platforms")

@@ -33,10 +33,10 @@
                         </div>
                         <div class="info-section">
                             <span class="date">{{application.application_date}}</span>
-                            <span class="platform">{{application.platform_id}}</span>
-                            <span class="step-badge status-{{application.last_step}}">Step {{application.last_step}}</span>
-                            <span class="feedback">{{application.feedback_id}}</span>
-                            <span class="salary">${{application.expected_salary}}</span>
+                            <span class="platform" data-label="Platform">{{application.platform_name}}</span>
+                            <span class="step-badge" data-label="Status" style="background-color: {{application.step_color}}33; color: {{application.step_color}}; border: 1px solid {{application.step_color}}55;">{{application.step_name}}</span>
+                            <span class="feedback" data-label="Feedback" style="background-color: {{application.feedback_color}}33; color: {{application.feedback_color}}; border: 1px solid {{application.feedback_color}}55;">{{application.feedback_name}}</span>
+                            <span class="salary" data-label="Range Salary">${{application.salary_range_min}}k - ${{application.salary_range_max}}k</span>
                         </div>
                         <div class="actions-section">
                             <i class="fa-solid fa-pen-to-square edit-btn"></i>
@@ -50,10 +50,14 @@
                     <!-- Additional details (hidden by default) -->
                     <div class="card-details" id="details-{{application.id}}" style="display: none;">
                         <div class="details-grid">
-                            <span><strong>Range:</strong> ${{application.salary_range_min}} - ${{application.salary_range_max}}</span>
-                            <span><strong>Offer:</strong> ${{application.salary_offer or 'N/A'}}</span>
+                            <span><strong>Salary Expected:</strong> ${{application.expected_salary}}k</span>
+                            <span><strong>Salary Offer:</strong> {% if application.salary_offer %}
+                                                                    ${{application.salary_offer}}k
+                                                                 {% else %}
+                                                                    N/A
+                                                                 {% endif %}</span>
                             <span><strong>Mode:</strong> {{application.mode}}</span>
-                            <span><strong>Last Update:</strong> {{application.last_step_date}}</span>
+                            <span><strong>Step Update:</strong> {{application.last_step_date}}</span>
                             <span><strong>Feedback Date:</strong> {{application.feedback_date}}</span>
                         </div>
                         {% if application.observation %}

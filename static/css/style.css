@@ -783,7 +783,7 @@ body {
 .info-section {
     flex: 1;
     display: grid;
-    grid-template-columns: 90px 80px 70px 60px 80px;
+    grid-template-columns: 90px 150px 150px 150px 100px;
     gap: 0.75rem;
     align-items: center;
     min-width: 0;
@@ -795,6 +795,19 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
+    display: block;
+}
+
+.info-section span::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.25rem;
 }
 
 /* Date */
@@ -807,24 +820,20 @@ body {
 .platform {
     color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.1);
-    padding: 0.2rem 0.4rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 6px;
-    font-size: 0.7rem !important;
+    font-size: 0.75rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: 600;
 }
 
 /* Step Badge */
 .step-badge {
     padding: 0.2rem 0.5rem;
-    border-radius: 10px;
-    font-size: 0.7rem !important;
+    border-radius: 6px;
+    font-size: 0.75rem !important;
     font-weight: 600;
 }
-
-.status-1, .status-2 { background: rgba(243, 156, 18, 0.2); color: #f39c12; }
-.status-3, .status-4 { background: rgba(52, 152, 219, 0.2); color: #3498db; }
-.status-5, .status-6 { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
-.status-7 { background: rgba(39, 174, 96, 0.2); color: #27ae60; }
-.status-8 { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
 
 /* Feedback */
 .feedback {
@@ -832,14 +841,15 @@ body {
     background: rgba(255, 255, 255, 0.08);
     padding: 0.2rem 0.4rem;
     border-radius: 6px;
-    font-size: 0.7rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600;
 }
 
 /* Salary */
 .salary {
     color: #ffffff;
     font-weight: 600;
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
     background: rgba(39, 174, 96, 0.1);
     padding: 0.2rem 0.4rem;
     border-radius: 6px;
@@ -912,7 +922,7 @@ body {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.8);
     font-style: italic;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 6px;
