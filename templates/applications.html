@@ -81,18 +81,18 @@
             <form id="addApplicationForm" method="post" action="{{ url_for('applications') }}" class="form_applications">
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="text" name="company" placeholder="Company" class="form-input" required>
+                        <input type="text" name="company" placeholder="Company" class="form-input-application" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="role" placeholder="Role" class="form-input" required>
+                        <input type="text" name="role" placeholder="Role" class="form-input-application" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="date" name="application_date" class="form-input" required>
+                        <input type="date" name="application_date" class="form-input-application" required>
                     </div>
                     <div class="form-group">
-                        <select name="platform_id" class="form-input" required>
+                        <select name="platform_id" class="form-input-application" required>
                             <option value="">Select Platform</option>
                             {% for platform in platforms %}
                             <option value="{{platform.id}}">{{platform.name}}</option>
@@ -102,10 +102,10 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="number" name="expected_salary" placeholder="Expected Salary" class="form-input">
+                        <input type="number" name="expected_salary" placeholder="Expected Salary" class="form-input-application">
                     </div>
                     <div class="form-group">
-                        <select name="mode" class="form-input" required>
+                        <select name="mode" class="form-input-application" required>
                             <option value="">Select Mode</option>
                             <option value="active">Active</option>
                             <option value="passive">Passive</option>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <textarea name="observation" placeholder="Observation (optional)" class="form-input" rows="3"></textarea>
+                    <textarea name="observation" placeholder="Observation (optional)" class="form-input-observation" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn-primary">Create Application</button>
             </form>

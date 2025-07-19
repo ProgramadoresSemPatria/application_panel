@@ -257,6 +257,27 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
+.form-input-application{
+    width: 60%;
+    height: 40px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-input-application:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-input-application::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .form-input-settings{
     width: 35%;
     height: 40px;
@@ -290,6 +311,24 @@ body {
 }
 
 .form-color-settings:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-input-observation{
+    width: 80%;
+    height: 150px;
+    resize: none;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-input-observation:focus {
     outline: none;
     border-color: rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.15);
@@ -719,11 +758,15 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: 1rem;
+    justify-items: center;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    padding-bottom: 20px;
+    align-items: center;
 }
 
 /* Applications Grid */
