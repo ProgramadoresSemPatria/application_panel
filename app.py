@@ -103,8 +103,8 @@ def insert_example():
     #cur.execute("INSERT INTO platforms (name, url) VALUES ('Linkedin', 'https://linkedin.com')")
     #cur.execute("INSERT INTO feedbacks_definition (name, description, color) VALUES ('Assessment failed', 'Assessment failed description', '#ffffff')")
     #cur.execute("INSERT INTO steps_definition (id, name, description, color) VALUES (1, 'Application Submitted', 'Initial application submitted to company', '#3498db')")
-    cur.execute("INSERT INTO applications (application_date, company, role, platform_id, salary_range_min, salary_range_max, expected_salary, salary_offer, last_step, last_step_date, mode, feedback_id, feedback_date, observation) VALUES ('2025-07-16', 'Company FULL', 'Data Scientist', 1, 50, 100, 60, 50, 1, '2025-07-16', 'pasive', 1, '2025-07-16', 'test application')")
-    cur.execute("INSERT INTO steps (application_id, step_id, observation, step_date) VALUES (1, 1, 'Applied through company website', '2025-07-10')")
+    #cur.execute("INSERT INTO applications (application_date, company, role, platform_id, salary_range_min, salary_range_max, expected_salary, salary_offer, last_step, last_step_date, mode, feedback_id, feedback_date, observation) VALUES ('2025-07-16', 'Company FULL', 'Data Scientist', 1, 50, 100, 60, 50, 1, '2025-07-16', 'pasive', 1, '2025-07-16', 'test application')")
+    #cur.execute("INSERT INTO steps (application_id, step_id, observation, step_date) VALUES (1, 1, 'Applied through company website', '2025-07-10')")
     con.commit()
     con.close()
 
@@ -145,16 +145,89 @@ def applications():
         return render_template('applications.html', applications=applications, platforms=platforms, steps_definition=steps_definition, feedbacks_definition=feedbacks_definition)
     
     if request.method == "POST":
-        name = request.form.get('platform_name')
-        url = request.form.get('platform_url')
+        company = request.form.get('company')
+        role = request.form.get('role')
+        application_date = request.form.get('application_date')
+        platform_id = request.form.get('platform_id')
+        expected_salary = request.form.get('expected_salary')
+        mode = request.form.get('mode')
+        salary_range_min = request.form.get('salary_range_min')
+        salary_range_max = request.form.get('salary_range_max')
+        observation = request.form.get('observation')
 
         con = get_database_connection()
         cur = con.cursor()
 
-        cur.execute("INSERT INTO applications (name, url) VALUES(?, ?)", (name, url))
+        cur.execute("INSERT INTO applications (company, role, application_date, platform_id, expected_salary, mode, salary_range_min, salary_range_max, observation, last_step, last_step_date, feedback_id, feedback_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (company, role, application_date, platform_id, expected_salary, mode, salary_range_min, salary_range_max, observation, 1, application_date, 1, application_date))
+        application_id = cur.lastrowid
+        cur.execute("INSERT INTO steps (application_id, step_id, step_date) VALUES(?, ?, ?)", (application_id, 1, application_date))
         con.commit()
         con.close()
         return redirect(url_for('applications'))
+
+@app.route('/applications/<int:application_id>/delete', methods=['POST'])
+def delete_application(application_id):
+
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("DELETE FROM applications WHERE id = ?", [application_id])
+    con.commit()
+    con.close()
+    return redirect(url_for('applications'))
+
+@app.route('/applications/<int:application_id>/add-step', methods=['POST'])
+def add_step(application_id):
+    step_id = request.form.get('step_id')
+    step_date = request.form.get('step_date')
+    observation = request.form.get('observation')
+    
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("INSERT INTO steps (application_id, step_id, observation, step_date) VALUES (?, ?, ?, ?)",(application_id, step_id, observation, step_date))
+        
+    cur.execute("UPDATE applications SET last_step = ?, last_step_date = ? WHERE id = ?",(step_id, step_date, application_id))
+        
+    con.commit()
+    con.close()
+    flash("Step added successfully!")
+        
+    return redirect(url_for('applications'))
+
+@app.route('/applications/<int:application_id>/finalize', methods=['POST'])
+def finalize_application(application_id):
+    final_step = request.form.get('final_step')
+    feedback_id = request.form.get('feedback_id')
+    finalize_date = request.form.get('finalize_date')
+    salary_offer = request.form.get('salary_offer')
+    final_observation = request.form.get('final_observation')
+    
+    con = get_database_connection()
+    cur = con.cursor()
+
+    cur.execute("INSERT INTO steps (application_id, step_id, observation, step_date) VALUES (?, ?, ?, ?)",(application_id, final_step, final_observation, finalize_date))
+        
+    update_query = """
+        UPDATE applications 
+        SET last_step = ?, last_step_date = ?, feedback_id = ?, feedback_date = ?
+    """
+    params = [final_step, finalize_date, feedback_id, finalize_date]
+    
+    if salary_offer:
+        update_query += ", salary_offer = ?"
+        params.append(salary_offer)
+    
+    update_query += " WHERE id = ?"
+    params.append(application_id)
+    
+    cur.execute(update_query, params)
+    
+    con.commit()
+    con.close()
+    flash("Application finalized successfully!")
+    
+    return redirect(url_for('applications'))
 
 @app.route('/platforms', methods=['GET', 'POST'])
 def platforms():

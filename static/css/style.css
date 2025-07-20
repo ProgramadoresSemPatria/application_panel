@@ -278,6 +278,17 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
+select.form-input-application {
+    cursor: pointer;
+}
+
+/* Option styling */
+select.form-input-application option {
+    background: rgba(30, 30, 30, 0.95);
+    padding: 0.5rem;
+    border: none;
+}
+
 .form-input-settings{
     width: 35%;
     height: 40px;
@@ -595,9 +606,9 @@ body {
 }
 
 .btn-add {
-    background: rgba(39, 174, 96, 0.8);
+    background: rgba(19, 236, 171, 0.8);
     border: 1px solid rgba(39, 174, 96, 1);
-    color: #ffffff;
+    color: #000000;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
     cursor: pointer;
@@ -610,7 +621,7 @@ body {
 }
 
 .btn-add:hover {
-    background: rgba(39, 174, 96, 1);
+    background: rgba(19, 236, 171, 1);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
 }
@@ -997,6 +1008,71 @@ body {
 .btn-expand-mini:hover {
     background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
+}
+
+/* New action buttons */
+.add-step-btn {
+    color: #3498db !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.add-step-btn:hover {
+    color: #2980b9 !important;
+    transform: scale(1.1);
+}
+
+.finalize-btn {
+    color: #f39c12 !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.finalize-btn:hover {
+    color: #e67e22 !important;
+    transform: scale(1.1);
+}
+
+/* Modal footer styling */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Button styling */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-danger {
+    background: rgba(220, 53, 69, 0.8);
+    color: #ffffff;
+    border: 1px solid rgba(220, 53, 69, 1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: rgba(220, 53, 69, 1);
 }
 
 /* Mobile Responsive */

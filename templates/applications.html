@@ -39,8 +39,21 @@
                             <span class="salary" data-label="Range Salary">${{application.salary_range_min}}k - ${{application.salary_range_max}}k</span>
                         </div>
                         <div class="actions-section">
+                            <i class="fa-solid fa-plus add-step-btn" 
+                               title="Add Step"
+                               data-application-id="{{application.id}}"
+                               data-application-company="{{application.company}}"
+                               data-application-role="{{application.role}}"></i>
+                            <i class="fa-solid fa-flag-checkered finalize-btn" 
+                               title="Finalize Application"
+                               data-application-id="{{application.id}}"
+                               data-application-company="{{application.company}}"
+                               data-application-role="{{application.role}}"></i>
                             <i class="fa-solid fa-pen-to-square edit-btn"></i>
-                            <i class="fa-solid fa-trash delete-btn"></i>
+                            <i class="fa-solid fa-trash delete-btn"
+                               data-application-id="{{application.id}}"
+                               data-application-company="{{application.company}}"
+                               data-application-role="{{application.role}}"></i>
                             <button class="btn-expand-mini" title="Show details">
                                 <i class="fa-solid fa-chevron-down"></i>
                             </button>
@@ -81,10 +94,10 @@
             <form id="addApplicationForm" method="post" action="{{ url_for('applications') }}" class="form_applications">
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="text" name="company" placeholder="Company" class="form-input-application" required>
+                        <input type="text" name="company" placeholder="Company (required)" class="form-input-application" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="role" placeholder="Role" class="form-input-application" required>
+                        <input type="text" name="role" placeholder="Role (required)" class="form-input-application" required>
                     </div>
                 </div>
                 <div class="form-row">
@@ -93,7 +106,7 @@
                     </div>
                     <div class="form-group">
                         <select name="platform_id" class="form-input-application" required>
-                            <option value="">Select Platform</option>
+                            <option value="">Select Platform (required)</option>
                             {% for platform in platforms %}
                             <option value="{{platform.id}}">{{platform.name}}</option>
                             {% endfor %}
@@ -102,23 +115,125 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <input type="number" name="expected_salary" placeholder="Expected Salary" class="form-input-application">
-                    </div>
-                    <div class="form-group">
                         <select name="mode" class="form-input-application" required>
-                            <option value="">Select Mode</option>
+                            <option value="">Select Mode (required)</option>
                             <option value="active">Active</option>
                             <option value="passive">Passive</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="expected_salary" placeholder="Expected Salary (optional)" class="form-input-application">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="number" name="salary_range_min" placeholder="Salary Range Min (optional)" class="form-input-application">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="salary_range_max" placeholder="Salary Range Max (optional)" class="form-input-application">
                     </div>
                 </div>
                 <div class="form-group">
                     <textarea name="observation" placeholder="Observation (optional)" class="form-input-observation" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn-primary">Create Application</button>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">Create Application</button>
+                </div>
             </form>
         </div>
     </div>
+
+    <!-- Add Step Modal -->
+<div id="addStepModal" class="modal">
+    <div class="modal-content glass-container">
+        <div class="modal-header">
+            <h3>Add Step</h3>
+            <span class="close-step">&times;</span>
+        </div>
+        <form id="addStepForm" method="post" class="form_applications">
+            <div class="modal-body">
+                <p id="stepApplicationInfo"></p>
+                
+                <div class="form-group">
+                    <label class="form-label required">Step</label>
+                    <select name="step_id" class="form-input" required>
+                        <option value="">Select Step</option>
+                        {% for step in steps_definition %}
+                        <option value="{{step.id}}">{{step.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label required">Date</label>
+                    <input type="date" name="step_date" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Observation</label>
+                    <textarea name="observation" placeholder="Step details (optional)" class="form-input" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelAddStep">Cancel</button>
+                <button type="submit" class="btn-primary">Add Step</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Finalize Application Modal -->
+<div id="finalizeModal" class="modal">
+    <div class="modal-content glass-container">
+        <div class="modal-header">
+            <h3>Finalize Application</h3>
+            <span class="close-finalize">&times;</span>
+        </div>
+        <form id="finalizeForm" method="post" class="form_applications">
+            <div class="modal-body">
+                <p id="finalizeApplicationInfo"></p>
+                
+                <div class="form-group">
+                    <label class="form-label required">Final Result</label>
+                    <select name="final_step" class="form-input" required>
+                        <option value="">Select Result</option>
+                        <option value="7">Offer</option>
+                        <option value="8">Denied</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label required">Feedback</label>
+                    <select name="feedback_id" class="form-input" required>
+                        <option value="">Select Feedback</option>
+                        {% for feedback in feedbacks_definition %}
+                        <option value="{{feedback.id}}">{{feedback.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" name="finalize_date" class="form-input" required>
+                </div>
+                
+                <div class="form-group" id="salaryOfferGroup" style="display: none;">
+                    <label class="form-label">Salary Offer</label>
+                    <input type="number" name="salary_offer" placeholder="Salary offer amount" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Final Notes</label>
+                    <textarea name="final_observation" placeholder="Final notes about the application" class="form-input" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelFinalize">Cancel</button>
+                <button type="submit" class="btn-danger" id="finalizeSubmit">Finalize Application</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <div id="editModal" class="modal">
         <div class="modal-content glass-container">
@@ -137,14 +252,11 @@
     <div id="deleteModal" class="modal">
         <div class="modal-content glass-container">
             <div class="modal-header">
-                <h3>Delete Platform</h3>
+                <h3>Delete Application</h3>
                 <span class="close-delete">&times;</span>
             </div>
             <div class="modal-body">
-                <p id="deleteMessage">Are you sure you want to delete this platform?</p>
-                <div id="applicationsWarning" class="warning-message" style="display: none;">
-                    <strong>Warning:</strong> This will also delete <span id="applicationCount"></span> application(s) linked to this platform.
-                </div>
+                <p id="deleteMessage">Are you sure you want to delete this application?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-secondary" id="cancelDelete">Cancel</button>
@@ -263,40 +375,129 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Modal elements
+    const addStepModal = document.getElementById('addStepModal');
+    const finalizeModal = document.getElementById('finalizeModal');
+    const addStepForm = document.getElementById('addStepForm');
+    const finalizeForm = document.getElementById('finalizeForm');
+    
+    // Button elements
+    const addStepButtons = document.querySelectorAll('.add-step-btn');
+    const finalizeButtons = document.querySelectorAll('.finalize-btn');
+    
+    // Close button elements
+    const closeStepBtn = document.querySelector('.close-step');
+    const closeFinalizeBtn = document.querySelector('.close-finalize');
+    const cancelAddStepBtn = document.getElementById('cancelAddStep');
+    const cancelFinalizeBtn = document.getElementById('cancelFinalize');
+    
+    // Add Step Modal
+    addStepButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const applicationId = this.dataset.applicationId;
+            const applicationCompany = this.dataset.applicationCompany;
+            const applicationRole = this.dataset.applicationRole;
+            
+            // Set form action
+            addStepForm.action = `/applications/${applicationId}/add-step`;
+            
+            // Update info text
+            document.getElementById('stepApplicationInfo').textContent = 
+                `Adding step for: ${applicationRole} at ${applicationCompany}`;
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelector('input[name="step_date"]').value = today;
+            
+            // Show modal
+            addStepModal.classList.add('show');
+        });
+    });
+    
+    // Finalize Modal
+    finalizeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const applicationId = this.dataset.applicationId;
+            const applicationCompany = this.dataset.applicationCompany;
+            const applicationRole = this.dataset.applicationRole;
+            
+            // Set form action
+            finalizeForm.action = `/applications/${applicationId}/finalize`;
+            
+            // Update info text
+            document.getElementById('finalizeApplicationInfo').textContent = 
+                `Finalizing: ${applicationRole} at ${applicationCompany}`;
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelector('input[name="finalize_date"]').value = today;
+            
+            // Show modal
+            finalizeModal.classList.add('show');
+        });
+    });
+    
+    // Show/hide salary offer field based on final result
+    const finalStepSelect = document.querySelector('select[name="final_step"]');
+    const salaryOfferGroup = document.getElementById('salaryOfferGroup');
+    const finalizeSubmit = document.getElementById('finalizeSubmit');
+    
+    finalStepSelect.addEventListener('change', function() {
+        if (this.value === '7') { // Offer
+            salaryOfferGroup.style.display = 'block';
+            finalizeSubmit.textContent = 'Accept Offer';
+            finalizeSubmit.className = 'btn-primary';
+        } else if (this.value === '8') { // Denied
+            salaryOfferGroup.style.display = 'none';
+            finalizeSubmit.textContent = 'Mark as Denied';
+            finalizeSubmit.className = 'btn-danger';
+        } else {
+            salaryOfferGroup.style.display = 'none';
+            finalizeSubmit.textContent = 'Finalize Application';
+            finalizeSubmit.className = 'btn-danger';
+        }
+    });
+    
+    // Close modal functions
+    closeStepBtn.addEventListener('click', () => addStepModal.classList.remove('show'));
+    closeFinalizeBtn.addEventListener('click', () => finalizeModal.classList.remove('show'));
+    cancelAddStepBtn.addEventListener('click', () => addStepModal.classList.remove('show'));
+    cancelFinalizeBtn.addEventListener('click', () => finalizeModal.classList.remove('show'));
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === addStepModal) {
+            addStepModal.classList.remove('show');
+        }
+        if (event.target === finalizeModal) {
+            finalizeModal.classList.remove('show');
+        }
+    });
+});
+</script>
+
 <script>
     const deleteModal = document.getElementById('deleteModal');
     const deleteForm = document.getElementById('deleteForm');
     const closeDeleteBtn = document.querySelector('.close-delete');
     const cancelDeleteBtn = document.getElementById('cancelDelete');
     const deleteButtons = document.querySelectorAll('.delete-btn');
-    const applicationsWarning = document.getElementById('applicationsWarning');
-    const applicationCount = document.getElementById('applicationCount');
 
     // Open delete modal when delete button is clicked
     deleteButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const platformId = this.dataset.platformId;
-            const platformName = this.dataset.platformName;
-
+            const applicationId = this.dataset.applicationId;
+            const applicationCompany = this.dataset.applicationCompany;
+            const applicationRole = this.dataset.applicationRole;
             // Set form action to delete route
-            deleteForm.action = `/platforms/${platformId}/delete`;
+            deleteForm.action = `/applications/${applicationId}/delete`;
 
             // Update message with platform name
             document.getElementById('deleteMessage').textContent = 
-                `Are you sure you want to delete "${platformName}"?`;
-
-            // Check for linked applications
-            fetch(`/platforms/${platformId}/check_applications`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.count > 0) {
-                        applicationCount.textContent = data.count;
-                        applicationsWarning.style.display = 'block';
-                    } else {
-                        applicationsWarning.style.display = 'none';
-                    }
-                });
-
+                `Are you sure you want to delete "${applicationRole} at ${applicationCompany}"?`;
             // Show modal
             deleteModal.classList.add('show');
         });
@@ -318,6 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 </script>
+
 <script>
     const platformNameInput = document.getElementById('platform_name');
     const platformUrlInput = document.getElementById('platform_url');
