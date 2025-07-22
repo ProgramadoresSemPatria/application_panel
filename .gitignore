@@ -1,3 +1,6 @@
-routes.txt
-database.db
-database_initial.db
+database_init.db
+functiondatabase.py
+.dockerignore
+Dockerfile
+data/
+requirements.txt

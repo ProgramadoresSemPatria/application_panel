@@ -1,13 +1,28 @@
-/* Reset and Base Styles */
+/*
+======================================================================
+JOB APPLICATION TRACKER - MAIN STYLESHEET
+======================================================================
+A dark-themed glassmorphism design for a job application tracking system.
+Features: Dark gradient backgrounds, glass containers, modal interfaces,
+responsive design, and custom scrollbars.
+======================================================================
+*/
+
+/* ====================================================================
+   1. RESET AND BASE STYLES
+==================================================================== */
+
+/* Universal reset for consistent styling across browsers */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base body styling with dark gradient background */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Base muito mais escura - quase preta com sutis variações */
+    /* Complex dark gradient background with subtle variations */
     background: linear-gradient(135deg, 
                 #000000 0%, 
                 #0a0a0a 25%, 
@@ -16,10 +31,14 @@ body {
                 #000000 100%);
     min-height: 100vh;
     color: #ffffff;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* Header Styles */
+/* ====================================================================
+   2. HEADER AND NAVIGATION
+==================================================================== */
+
+/* Main header with glassmorphism effect */
 .header {
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -29,6 +48,7 @@ body {
     padding: 0;
 }
 
+/* Header container with centered content */
 .header-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -38,16 +58,17 @@ body {
     padding: 1rem 2rem;
 }
 
-/* Logo Styles */
+/* Logo styling */
 .logo img {
     width: 50%;
 }
 
-/* Navigation Menu */
+/* Navigation menu container */
 .nav-menu {
     position: relative;
 }
 
+/* Horizontal navigation list */
 .nav-list {
     display: flex;
     list-style: none;
@@ -59,6 +80,7 @@ body {
     position: relative;
 }
 
+/* Regular navigation links */
 .nav-link {
     color: #ffffff;
     text-decoration: none;
@@ -73,6 +95,7 @@ body {
     transform: translateY(-2px);
 }
 
+/* Active navigation link with purple background */
 .nav-link.active {
     color: #ffffff;
     text-decoration: none;
@@ -85,7 +108,7 @@ body {
     border: 1px solid rgba(95, 19, 236, 0.2);
 }
 
-/* Mobile Menu Toggle */
+/* Mobile menu toggle button (hamburger) */
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -96,6 +119,7 @@ body {
     gap: 0.3rem;
 }
 
+/* Hamburger menu lines */
 .hamburger-line {
     width: 25px;
     height: 3px;
@@ -104,6 +128,7 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Hamburger animation when active */
 .mobile-menu-active .hamburger-line:nth-child(1) {
     transform: rotate(45deg) translate(6px, 6px);
 }
@@ -116,7 +141,11 @@ body {
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Main Content */
+/* ====================================================================
+   3. MAIN LAYOUT AND CONTAINERS
+==================================================================== */
+
+/* Main content area */
 .main-content {
     flex: 1;
     display: flex;
@@ -125,6 +154,7 @@ body {
     min-height: calc(100vh - 140px);
 }
 
+/* Content container with centered layout */
 .content-container {
     flex: 1;
     display: flex;
@@ -137,7 +167,11 @@ body {
     justify-content: center;
 }
 
-/* Glassmorphism Container for Content */
+/* ====================================================================
+   4. GLASSMORPHISM CONTAINERS
+==================================================================== */
+
+/* Main glass container with blur effect */
 .glass-container {
     backdrop-filter: blur(20px);
     background: rgba(255, 255, 255, 0.05);
@@ -148,6 +182,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/* Glass container for application cards */
 .glass-container-application {
     backdrop-filter: blur(20px);
     background: rgba(255, 255, 255, 0.05);
@@ -158,6 +193,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/* Glass container for settings pages */
 .glass-container-settings {
     backdrop-filter: blur(20px);
     background: rgba(255, 255, 255, 0.05);
@@ -168,33 +204,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-.setting-box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1; /* Full viewport height */ /* Space between the divs */
-    padding: 1rem;
-}
-
-.item-setting {
-    width: 100%;
-    flex: 1;
-}
-
-.platform-box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1; /* Full viewport height */ /* Space between the divs */
-    padding: 1rem;
-}
-
-.item-platform{
-    width: 100%;
-    flex: 1;
-}
-
-
+/* Scrollable glass container for tabs */
 .glass-container-tab {
     max-height: 500px;
     overflow-y: auto;
@@ -205,6 +215,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/* Scrollable glass container for settings tabs (smaller height) */
 .glass-container-tab-settings {
     max-height: 150px;
     overflow-y: auto;
@@ -215,28 +226,94 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-.fixed-header{
+/* Fixed header for tables */
+.fixed-header {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px 16px 0 0;
     overflow-y: hidden;
     overflow-x: hidden;
 }
 
-.box_title{
+/* ====================================================================
+   5. LAYOUT CONTAINERS FOR SPECIFIC SECTIONS
+==================================================================== */
+
+/* Settings page layout container */
+.setting-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1rem;
+}
+
+.item-setting {
+    width: 100%;
+    flex: 1;
+}
+
+/* Platform management layout container */
+.platform-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1rem;
+}
+
+.item-platform {
+    width: 100%;
+    flex: 1;
+}
+
+/* Centered title styling */
+.box_title {
     text-align: center;
 }
 
-.form_platforms{
+/* ====================================================================
+   6. FORM STYLING
+==================================================================== */
+
+/* Form layouts for different sections */
+.form_platforms {
     display: flex;
     justify-content: space-between;
 }
 
-.form_steps_definition{
+.form_steps_definition {
     display: flex;
     justify-content: space-between;
 }
 
-.form-input{
+.form_applications {
+    padding: 1.5rem;
+}
+
+/* Form row grid layout */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-items: center;
+}
+
+/* Form group with vertical layout */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
+/* ====================================================================
+   7. INPUT FIELD STYLING
+==================================================================== */
+
+/* Standard form inputs */
+.form-input {
     width: 40%;
     height: 40px;
     padding: 0.75rem 1rem;
@@ -257,7 +334,8 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.form-input-application{
+/* Application form inputs (wider) */
+.form-input-application {
     width: 60%;
     height: 40px;
     padding: 0.75rem 1rem;
@@ -278,18 +356,20 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
+/* Select dropdown styling */
 select.form-input-application {
     cursor: pointer;
 }
 
-/* Option styling */
+/* Option styling for select dropdowns */
 select.form-input-application option {
     background: rgba(30, 30, 30, 0.95);
     padding: 0.5rem;
     border: none;
 }
 
-.form-input-settings{
+/* Settings form inputs */
+.form-input-settings {
     width: 35%;
     height: 40px;
     padding: 0.75rem 1rem;
@@ -310,7 +390,8 @@ select.form-input-application option {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.form-color-settings{
+/* Color picker input */
+.form-color-settings {
     width: 10%;
     height: 40px;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -327,7 +408,8 @@ select.form-input-application option {
     background: rgba(255, 255, 255, 0.15);
 }
 
-.form-input-observation{
+/* Textarea for observations */
+.form-input-observation {
     width: 80%;
     height: 150px;
     resize: none;
@@ -345,20 +427,28 @@ select.form-input-application option {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* Color input styling for webkit browsers */
 #step_color {
     -webkit-appearance: none;
     padding: 0;
     border-radius: 8px;
-  }
-  #step_color::-webkit-color-swatch {
+}
+
+#step_color::-webkit-color-swatch {
     border-radius: 8px;
     padding: 0;
-  }
-  #step_color::-webkit-color-swatch-wrapper {
+}
+
+#step_color::-webkit-color-swatch-wrapper {
     border-radius: 8px;
     padding: 2px;
-  }
+}
 
+/* ====================================================================
+   8. BUTTON STYLING
+==================================================================== */
+
+/* Primary button (green accent) */
 .btn-primary {
     background: rgba(19, 236, 171);
     color: #000000;
@@ -374,6 +464,7 @@ select.form-input-application option {
     background: rgba(19, 236, 171, 0.5);
 }
 
+/* Disabled button state */
 .btn-primary:disabled {
     background: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.3);
@@ -388,6 +479,113 @@ select.form-input-application option {
     box-shadow: none;
 }
 
+/* Secondary button (light transparent) */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Danger button (red for delete actions) */
+.btn-danger {
+    background: rgba(220, 53, 69, 0.8);
+    color: #ffffff;
+    border: 1px solid rgba(220, 53, 69, 1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: rgba(220, 53, 69, 1);
+}
+
+/* Search button (blue accent) */
+.btn-search {
+    background: rgba(52, 152, 219, 0.8);
+    border: 1px solid rgba(52, 152, 219, 1);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-search:hover {
+    background: rgba(52, 152, 219, 1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Add button (green accent) */
+.btn-add {
+    background: rgba(19, 236, 171, 0.8);
+    border: 1px solid rgba(39, 174, 96, 1);
+    color: #000000;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.btn-add:hover {
+    background: rgba(19, 236, 171, 1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+/* Mini expand button */
+.btn-expand-mini {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.6rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-expand-mini:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* Disabled button states for edit/delete actions */
+.edit-btn.disabled,
+.edit-btnF.disabled,
+.delete-btn.disabled,
+.delete-btnF.disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ====================================================================
+   9. TABLE AND GRID STYLING
+==================================================================== */
+
+/* Platform table styling */
 .tab-platforms {
     width: 100%;
     border-collapse: collapse;
@@ -398,19 +596,19 @@ select.form-input-application option {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/* General table header */
 .header-table {
     width: 100%;
     border-collapse: collapse;
     border-radius: 16px;
 }
 
-/* Header Styles */
+/* Table header for platforms */
 .tab-header {
     display: grid;
     grid-template-columns: 2fr 3fr 3fr 1fr 1fr;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    
 }
 
 .tab-header th {
@@ -424,12 +622,12 @@ select.form-input-application option {
     text-align: center;
 }
 
+/* Table header for settings */
 .tab-header-settings {
     display: grid;
     grid-template-columns: 2fr 3fr 4fr 2fr 1fr 1fr;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    
 }
 
 .tab-header-settings th {
@@ -443,6 +641,7 @@ select.form-input-application option {
     text-align: center;
 }
 
+/* Table body for platforms */
 .tab-body {
     display: grid;
     grid-template-columns: 2fr 3fr 3fr 1fr 1fr;
@@ -467,6 +666,7 @@ select.form-input-application option {
     text-align: center;
 }
 
+/* Table body for settings */
 .tab-body-settings {
     display: grid;
     grid-template-columns: 2fr 3fr 4fr 2fr 1fr 1fr;
@@ -491,65 +691,76 @@ select.form-input-application option {
     text-align: center;
 }
 
+/* ====================================================================
+   10. CUSTOM SCROLLBAR STYLING
+==================================================================== */
+
+/* Scrollbar for main tab container */
 .glass-container-tab::-webkit-scrollbar {
     width: 8px;
- }
- 
- .glass-container-tab::-webkit-scrollbar-track {
+}
+
+.glass-container-tab::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
     margin: 8px 0;
- }
- 
- .glass-container-tab::-webkit-scrollbar-thumb {
+}
+
+.glass-container-tab::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
- }
- 
- .glass-container-tab::-webkit-scrollbar-thumb:hover {
+}
+
+.glass-container-tab::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.2);
- }
- 
- .glass-container-tab::-webkit-scrollbar-corner {
-    background: transparent;
- }
+}
 
- .glass-container-tab-settings::-webkit-scrollbar {
+.glass-container-tab::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Scrollbar for settings tab container */
+.glass-container-tab-settings::-webkit-scrollbar {
     width: 8px;
- }
- 
- .glass-container-tab-settings::-webkit-scrollbar-track {
+}
+
+.glass-container-tab-settings::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
     margin: 8px 0;
- }
- 
- .glass-container-tab-settings::-webkit-scrollbar-thumb {
+}
+
+.glass-container-tab-settings::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
- }
- 
- .glass-container-tab-settings::-webkit-scrollbar-thumb:hover {
+}
+
+.glass-container-tab-settings::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.2);
- }
- 
- .glass-container-tab-settings::-webkit-scrollbar-corner {
-    background: transparent;
- }
+}
 
- .search-container {
+.glass-container-tab-settings::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* ====================================================================
+   11. SEARCH AND ADD SECTIONS
+==================================================================== */
+
+/* Container for search and add functionality */
+.search-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Search Section */
+/* Search section styling */
 .search-section {
     display: flex;
     align-items: center;
@@ -558,6 +769,7 @@ select.form-input-application option {
     max-width: 400px;
 }
 
+/* Search input field */
 .search-input {
     flex: 1;
     padding: 0.75rem 1rem;
@@ -581,52 +793,17 @@ select.form-input-application option {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Search Button */
-.btn-search {
-    background: rgba(52, 152, 219, 0.8);
-    border: 1px solid rgba(52, 152, 219, 1);
-    color: #ffffff;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.btn-search:hover {
-    background: rgba(52, 152, 219, 1);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-}
-
-/* Add Section */
+/* Add section styling */
 .add-section {
     display: flex;
     align-items: center;
 }
 
-.btn-add {
-    background: rgba(19, 236, 171, 0.8);
-    border: 1px solid rgba(39, 174, 96, 1);
-    color: #000000;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-}
+/* ====================================================================
+   12. MODAL STYLING
+==================================================================== */
 
-.btn-add:hover {
-    background: rgba(19, 236, 171, 1);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-}
-
-
+/* Modal backdrop */
 .modal {
     display: none;
     position: fixed;
@@ -645,7 +822,7 @@ select.form-input-application option {
     align-items: center;
 }
 
-/* Modal Content */
+/* Modal content container */
 .modal-content {
     position: relative;
     margin: 0;
@@ -655,7 +832,7 @@ select.form-input-application option {
     animation: modalSlideIn 0.3s ease-out;
 }
 
-/* Modal Header */
+/* Modal header */
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -669,42 +846,12 @@ select.form-input-application option {
     color: #ffffff;
 }
 
-/* Close Button */
-.close {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.close:hover {
-    color: #ffffff;
-}
-
-.closeF {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.closeF:hover {
-    color: #ffffff;
-}
-
-/* Form inside Modal */
-.modal-content .form_platforms {
-    padding: 1.5rem;
-}
-
-/* Modal Body */
+/* Modal body */
 .modal-body {
     padding: 1.5rem;
 }
 
-/* Modal Footer */
+/* Modal footer */
 .modal-footer {
     display: flex;
     justify-content: flex-end;
@@ -713,7 +860,12 @@ select.form-input-application option {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Warning Message */
+/* Form inside modal */
+.modal-content .form_platforms {
+    padding: 1.5rem;
+}
+
+/* Warning message styling */
 .warning-message {
     background: rgba(255, 193, 7, 0.2);
     border: 1px solid rgba(255, 193, 7, 0.5);
@@ -723,70 +875,46 @@ select.form-input-application option {
     color: #ffc107;
 }
 
-/* Button Styles */
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
+/* Close button styling */
+.close,
+.closeF,
+.close-delete,
+.close-deleteF,
+.close-add,
+.close-step,
+.close-finalize,
+.close-step-edit,
+.close-step-delete {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.btn-danger {
-    background: rgba(220, 53, 69, 0.8);
+.close:hover,
+.closeF:hover,
+.close-delete:hover,
+.close-deleteF:hover,
+.close-add:hover,
+.close-step:hover,
+.close-finalize:hover,
+.close-step-edit:hover,
+.close-step-delete:hover {
     color: #ffffff;
-    border: 1px solid rgba(220, 53, 69, 1);
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-.btn-danger:hover {
-    background: rgba(220, 53, 69, 1);
-}
+/* ====================================================================
+   13. APPLICATION CARDS AND GRID
+==================================================================== */
 
-.close-delete {
-    cursor: pointer;
-}
-
-.close-deleteF {
-    cursor: pointer;
-}
-
-.form_applications {
-    padding: 1.5rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    justify-items: center;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-bottom: 20px;
-    align-items: center;
-}
-
-/* Applications Grid */
+/* Applications grid layout */
 .applications-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
 }
 
-/* Application Card */
+/* Individual application card */
 .application-card {
     padding: 0.6rem 1rem;
     transition: all 0.3s ease;
@@ -798,7 +926,7 @@ select.form-input-application option {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Card Header - 7 fields layout */
+/* Card header with 7 fields layout */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -807,7 +935,7 @@ select.form-input-application option {
     min-height: 45px;
 }
 
-/* Company Section - Company + Role */
+/* Company section (company + role) */
 .company-section {
     flex: 0 0 180px;
     display: flex;
@@ -833,11 +961,11 @@ select.form-input-application option {
     text-overflow: ellipsis;
 }
 
-/* Info Section - 5 fields in horizontal layout */
+/* Info section with 5 fields in horizontal layout */
 .info-section {
     flex: 1;
     display: grid;
-    grid-template-columns: 90px 150px 150px 150px 100px;
+    grid-template-columns: 70px 120px 150px 150px 100px 100px;
     gap: 0.75rem;
     align-items: center;
     min-width: 0;
@@ -852,6 +980,7 @@ select.form-input-application option {
     display: block;
 }
 
+/* Data labels using CSS pseudo-elements */
 .info-section span::before {
     content: attr(data-label);
     display: block;
@@ -864,13 +993,13 @@ select.form-input-application option {
     margin-bottom: 0.25rem;
 }
 
-/* Date */
+/* Specific field styling */
 .date {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.75rem !important;
 }
 
-/* Platform */
+/* Platform badge */
 .platform {
     color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.1);
@@ -881,7 +1010,7 @@ select.form-input-application option {
     font-weight: 600;
 }
 
-/* Step Badge */
+/* Step badge with dynamic background */
 .step-badge {
     padding: 0.2rem 0.5rem;
     border-radius: 6px;
@@ -889,7 +1018,7 @@ select.form-input-application option {
     font-weight: 600;
 }
 
-/* Feedback */
+/* Feedback badge */
 .feedback {
     color: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.08);
@@ -899,7 +1028,7 @@ select.form-input-application option {
     font-weight: 600;
 }
 
-/* Salary */
+/* Salary information */
 .salary {
     color: #ffffff;
     font-weight: 600;
@@ -910,7 +1039,7 @@ select.form-input-application option {
     border: 1px solid rgba(39, 174, 96, 0.3);
 }
 
-/* Actions Section */
+/* Actions section */
 .actions-section {
     flex: 0 0 80px;
     display: flex;
@@ -930,33 +1059,14 @@ select.form-input-application option {
     transform: scale(1.1);
 }
 
-.btn-expand-mini {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.7);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 0.6rem;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-expand-mini:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-}
-
-/* Card Details */
+/* Card details section (expandable) */
 .card-details {
     margin-top: 0.75rem;
     padding-top: 0.75rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Details grid layout */
 .details-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -972,6 +1082,7 @@ select.form-input-application option {
     text-overflow: ellipsis;
 }
 
+/* Observation text styling */
 .observation {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.8);
@@ -983,13 +1094,14 @@ select.form-input-application option {
     border-left: 3px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Expand Button - Mais discreto */
+/* Card expand button positioning */
 .card-expand {
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
 }
 
+/* Enhanced expand button */
 .btn-expand-mini {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1010,7 +1122,11 @@ select.form-input-application option {
     color: #ffffff;
 }
 
-/* New action buttons */
+/* ====================================================================
+   14. APPLICATION ACTION BUTTONS
+==================================================================== */
+
+/* Add step button */
 .add-step-btn {
     color: #3498db !important;
     cursor: pointer;
@@ -1024,6 +1140,7 @@ select.form-input-application option {
     transform: scale(1.1);
 }
 
+/* Finalize application button */
 .finalize-btn {
     color: #f39c12 !important;
     cursor: pointer;
@@ -1037,62 +1154,444 @@ select.form-input-application option {
     transform: scale(1.1);
 }
 
-/* Modal footer styling */
-.modal-footer {
+/* Edit step button */
+.edit-step-btn {
+    cursor: pointer;
+}
+
+/* Delete step button */
+.delete-step-btn {
+    cursor: pointer;
+}
+
+/* Actions date section */
+.actions-date-section {
+    font-size: 0.9rem;
+}
+
+/* ====================================================================
+   15. TIMELINE STYLING
+==================================================================== */
+
+/* Timeline container */
+.timeline-container {
+    position: relative;
+    padding: 1rem 0;
+    margin: 1rem 0;
+}
+
+/* Main timeline line running vertically */
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    z-index: 1;
+}
+
+/* Individual timeline item */
+.timeline-item {
+    position: relative;
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
 }
 
-/* Button styling */
-.btn-secondary {
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Timeline marker (colored dot) */
+.timeline-marker {
+    position: absolute;
+    left: -3px;
+    top: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove individual timeline lines (using main line instead) */
+.timeline-line {
+    display: none;
+}
+
+/* Timeline content box */
+.timeline-content {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.5rem 0.5rem;
+    border-radius: 12px;
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Timeline header */
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.timeline-step-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
     background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.75rem 1.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* Timeline observation */
+.timeline-observation {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    cursor: pointer;
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Timeline title */
+.timeline-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.timeline-title i {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* No timeline state */
+.no-timeline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+.no-timeline i {
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+/* ====================================================================
+   16. STEPS STYLING
+==================================================================== */
+
+/* Steps list container */
+.steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Individual step item */
+.step-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+/* Step date styling */
+.step-date {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Step information container */
+.step-info {
+    margin-top: 10px;
+}
+
+/* Steps application instructions */
+.steps_app_ins {
+    padding-left: 10px;
+}
+
+/* ====================================================================
+   17. DASHBOARD STYLING
+==================================================================== */
+
+/* Dashboard statistics grid */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Individual stat card */
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
-.btn-danger {
-    background: rgba(220, 53, 69, 0.8);
-    color: #ffffff;
-    border: 1px solid rgba(220, 53, 69, 1);
-    padding: 0.75rem 1.5rem;
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Dashboard grid layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Dashboard card */
+.dashboard-card {
+    min-height: 300px;
+}
+
+.dashboard-card.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Dashboard card header */
+.card-header-dashboard {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+}
+
+.card-header-dashboard h3 {
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* ====================================================================
+   18. METRICS AND ANALYTICS
+==================================================================== */
+
+/* Step metrics container */
+.step-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Individual step metric */
+.step-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.btn-danger:hover {
-    background: rgba(220, 53, 69, 1);
+.step-metric:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .applications-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .card-main-info {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-    }
-    
-    .details-row {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
+/* Step info in dashboard */
+.step-info-dashboard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
-/* Animation */
+/* Step indicator (colored circle) */
+.step-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Step details container */
+.step-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.step-stats {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Step conversion section */
+.step-conversion {
+    text-align: right;
+}
+
+.conversion-rate {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.conversion-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Platform metrics */
+.platform-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.platform-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.platform-name {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.platform-count-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.platform-count {
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Platform progress bar */
+.platform-bar {
+    width: 60px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.platform-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(19, 236, 171, 0.8), rgba(19, 236, 171, 1));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+/* Mode metrics */
+.mode-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mode-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.mode-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.mode-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.mode-count {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.mode-percentage {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+/* ====================================================================
+   19. ANIMATIONS
+==================================================================== */
+
+/* Modal slide-in animation */
 @keyframes modalSlideIn {
     from {
         transform: translateY(-50px);
@@ -1104,7 +1603,11 @@ select.form-input-application option {
     }
 }
 
-/* Footer Styles */
+/* ====================================================================
+   20. FOOTER STYLING
+==================================================================== */
+
+/* Footer container */
 .footer {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding: 1rem 0;
@@ -1135,87 +1638,18 @@ select.form-input-application option {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive Design - Tablet */
-@media (max-width: 768px) {
-    .header-container {
-        padding: 1rem;
-    }
-    
-    .nav-list {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        flex-direction: column;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(20px);
-        border-radius: 0 0 16px 16px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-top: none;
-        padding: 1rem;
-        gap: 1rem;
-        min-width: 200px;
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .nav-list-active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    .mobile-menu-toggle {
-        display: flex;
-    }
-    
-    .nav-link {
-        display: block;
-        text-align: center;
-        width: 100%;
-    }
-    
-    .content-container {
-        padding: 0 1rem;
-    }
-    
-    .glass-container {
-        padding: 1.5rem;
-        margin: 0.5rem 0;
-    }
-}
-
-/* Responsive Design - Mobile */
-@media (max-width: 480px) {
-    .header-container {
-        padding: 0.75rem;
-    }
-    
-    .logo-text {
-        font-size: 1.25rem;
-    }
-    
-    .content-container {
-        padding: 0 0.75rem;
-    }
-    
-    .glass-container {
-        padding: 1rem;
-        border-radius: 12px;
-    }
-    
-    .main-content {
-        padding: 1rem 0;
-    }
-    
-    .footer-container {
-        padding: 0 0.75rem;
-    }
-    
-    .footer-text {
-        font-size: 0.8rem;
-    }
-}
-
-
+/*
+======================================================================
+END OF STYLESHEET
+======================================================================
+This completes the styling for the Job Application Tracker system.
+The design follows a dark glassmorphism theme with:
+- Consistent spacing and typography
+- Smooth transitions and hover effects
+- Responsive grid layouts
+- Custom scrollbars and form controls
+- Modal interfaces with blur effects
+- Timeline components for application progress
+- Dashboard analytics with metrics and charts
+======================================================================
+*/

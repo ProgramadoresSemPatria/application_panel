@@ -1,92 +1,176 @@
+<!--
+================================================================================
+JOB APPLICATION TRACKER - BASE TEMPLATE
+================================================================================
+This is the main base template for the Job Application Tracker system.
+All other pages extend this template using Jinja2 template inheritance.
+
+Features:
+- Dynamic active navigation highlighting
+- Glassmorphism design integration
+- Footer with attribution
+- FontAwesome icons integration
+
+Available blocks for child templates:
+1. block title - Override page title
+2. block content - Main page content
+3. block scripts - Page-specific JavaScript
+
+================================================================================
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic meta tags for responsive design and character encoding -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Dynamic page title using Jinja2 template inheritance -->
     <title>{% block title %}Job Tracker{% endblock %}</title>
+    
+    <!-- Main stylesheet link using Flask's url_for helper -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
-    <!-- Header Section -->
+    <!--
+    ========================================================================
+    HEADER SECTION
+    ========================================================================
+    Contains the main navigation and logo. Uses glassmorphism styling
+    with sticky positioning for consistent access across all pages.
+    ========================================================================
+    -->
     <header class="header">
         <div class="header-container">
-            <!-- Logo Section -->
+            
+            <!-- 
+            Logo Section
+            ============
+            Clickable logo that links back to the home page
+            -->
             <div class="logo">
-                <a href="">
-                    <img src="{{ url_for('static', filename='images/app-logo.webp') }}">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='images/app-logo.webp') }}" 
+                         alt="Job Tracker Logo">
                 </a>
             </div>
             
-            <!-- Navigation Menu -->
+            <!-- 
+            Navigation Menu
+            ===============
+            Main navigation with dynamic active state highlighting.
+            Uses Flask's request.endpoint to determine current page.
+            -->
             <nav class="nav-menu">
                 <ul class="nav-list">
+                    <!-- Home Navigation Link -->
                     <li class="nav-item">
-                        <a href="" class="nav-link">Home</a>
+                        <a href="{{ url_for('home') }}" 
+                           class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">
+                            Home
+                        </a>
                     </li>
+                    
+                    <!-- Applications Navigation Link -->
                     <li class="nav-item">
                         <a href="{{ url_for('applications') }}" 
-                        class="nav-link {% if request.endpoint == 'applications' %}active{% endif %}">Applications</a>
+                           class="nav-link {% if request.endpoint == 'applications' %}active{% endif %}">
+                            Applications
+                        </a>
                     </li>
+                    
+                    <!-- Platforms Navigation Link -->
                     <li class="nav-item">
                         <a href="{{ url_for('platforms') }}" 
-                        class="nav-link {% if request.endpoint == 'platforms' %}active{% endif %}">Platforms</a>
+                           class="nav-link {% if request.endpoint == 'platforms' %}active{% endif %}">
+                            Platforms
+                        </a>
                     </li>
+                    
+                    <!-- Settings Navigation Link -->
                     <li class="nav-item">
                         <a href="{{ url_for('settings') }}" 
-                        class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}">Settings</a>
+                           class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}">
+                            Settings
+                        </a>
                     </li>
                 </ul>
-                
-                <!-- Mobile Menu Toggle -->
-                <button class="mobile-menu-toggle" aria-label="Toggle navigation">
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                </button>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content Area -->
+    <!--
+    ========================================================================
+    MAIN CONTENT AREA
+    ========================================================================
+    The primary content area where all page-specific content is rendered.
+    Uses Jinja2 template inheritance with the 'content' block.
+    ========================================================================
+    -->
     <main class="main-content">
         <div class="content-container">
             {% block content %}
-            <!-- Page-specific content will be inserted here -->
+            <!-- 
+            Page-specific content will be inserted here by child templates.
+            Each page (home.html, applications.html, etc.) will extend this
+            base template and fill in their specific content in this block.
+            -->
             {% endblock %}
         </div>
     </main>
 
-    <!-- Footer Section -->
+    <!--
+    ========================================================================
+    FOOTER SECTION
+    ========================================================================
+    Simple footer with attribution link. Uses consistent styling
+    with the glassmorphism theme.
+    ========================================================================
+    -->
     <footer class="footer">
         <div class="footer-container">
             <p class="footer-text">
                 Coded by 
-                <a href="https://github.com/brxnnox" target="_blank" rel="noopener noreferrer" class="footer-link">
+                <a href="https://github.com/brxnnox" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="footer-link">
                     @brxnnox
                 </a>
             </p>
         </div>
     </footer>
 
-    <!-- Optional JavaScript Block for page-specific scripts -->
+    <!--
+    ========================================================================
+    JAVASCRIPT SECTION
+    ========================================================================
+    Contains both page-specific scripts (via template block) and
+    base functionality required by all pages.
+    ========================================================================
+    -->
+    
+    <!-- 
+    Optional JavaScript Block
+    ========================
+    Child templates can add their own JavaScript by extending this block.
+    This allows for page-specific functionality while maintaining the
+    base template's core JavaScript.
+    -->
     {% block scripts %}
+    <!-- Page-specific JavaScript will be inserted here -->
     {% endblock %}
     
-    <!-- Base JavaScript for mobile menu functionality -->
-    <script src="https://kit.fontawesome.com/968be355d7.js" crossorigin="anonymous"></script>
-    <script>
-        // Mobile menu toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileToggle = document.querySelector('.mobile-menu-toggle');
-            const navList = document.querySelector('.nav-list');
-            
-            if (mobileToggle && navList) {
-                mobileToggle.addEventListener('click', function() {
-                    navList.classList.toggle('nav-list-active');
-                    mobileToggle.classList.toggle('mobile-menu-active');
-                });
-            }
-        });
-    </script>
+    <!-- 
+    FontAwesome Icons CDN
+    ====================
+    Provides icon fonts used throughout the application for UI elements,
+    buttons, and visual indicators.
+    -->
+    <script src="https://kit.fontawesome.com/968be355d7.js" 
+            crossorigin="anonymous"></script>
+   
 </body>
 </html>
