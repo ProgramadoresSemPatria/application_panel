@@ -1,4 +1,5 @@
 import React from "react";
+import ChartCard from "../components/ChartCard";
 import StatsCards from "../components/StatsCards";
 import StepMetrics from "../components/StepMetrics";
 import ConversionChart from "../components/ConvertionChart";
@@ -10,57 +11,60 @@ import { mockData } from "../data/mockData";
 
 const Dashboard: React.FC = () => {
     return (
-        <div className="p-6 space-y-6 bg-gray-900 min-h-screen text-white">
-            <h1 className="text-2xl font-bold">Application Analytics Dashboard</h1>
+        <article className="grid grid-cols-1 md:grid-cols-4 gap-6 bg-black p-6 space-y-6 min-h-screen text-white">
 
-            {/* Summary Stats */}
-            <StatsCards
-                total={mockData.total_applications}
-                offers={mockData.total_offers}
-                successRate={mockData.success_rate}
-                denials={mockData.total_denials}
-            />
+            <h3 className="text-2xl col-span-4 text-center font-bold">Application Analytics Dashboard</h3>
+            <section className="col-span-full">
+                <StatsCards
+                    total={mockData.total_applications}
+                    offers={mockData.total_offers}
+                    successRate={mockData.success_rate}
+                    denials={mockData.total_denials}
+                />
+            </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-4 bg-white/10 rounded-xl">
-                    <h2 className="mb-2 font-semibold">Applications by Step</h2>
+            <section className="md:col-span-2">
+                <ChartCard title="Applications by Step">
                     <StepMetrics steps={mockData.conversion_data} />
-                </div>
+                </ChartCard>
+            </section>
 
-                <div className="p-4 bg-white/10 rounded-xl">
-                    <h2 className="mb-2 font-semibold">Conversion Funnel</h2>
-                    <ConversionChart data={mockData.conversion_data} />
-                </div>
-
-                <div className="p-4 bg-white/10 rounded-xl">
-                    <h2 className="mb-2 font-semibold">Average Days Between Steps</h2>
+            <section className="md:col-span-2">
+                <ChartCard title="Average Days Between Steps">
                     <AverageDaysChart data={mockData.average_days_per_step} />
-                </div>
+                </ChartCard>
+            </section>
 
-                <div className="p-4 bg-white/10 rounded-xl">
-                    <h2 className="mb-2 font-semibold">Applications by Platform</h2>
-                    <PlatformMetrics 
-                        platforms={mockData.applications_by_platform} 
-                        total={mockData.total_applications} 
+            <section className="col-span-full p-4 bg-white/10 rounded-xl">
+                <ChartCard title="Conversion Funnel">
+                    <ConversionChart data={mockData.conversion_data} />
+                </ChartCard>
+            </section>
+
+            <section className="md:col-span-2">
+                <ChartCard title="Applications by Platform">
+                    <PlatformMetrics
+                        platforms={mockData.applications_by_platform}
+                        total={mockData.total_applications}
                     />
-                </div>
+                </ChartCard>
+            </section>
 
-                <div className="p-4 bg-white/10 rounded-xl">
-                    <h2 className="mb-2 font-semibold">Application Mode</h2>
-                    <ModeMetrics 
-                        modes={mockData.applications_by_mode} 
-                        total={mockData.total_applications} 
+            <section className="md:col-span-2">
+                <ChartCard title="Application Mode">
+                    <ModeMetrics
+                        modes={mockData.applications_by_mode}
+                        total={mockData.total_applications}
                     />
-                </div>
+                </ChartCard>
+            </section>
 
-
-            </div>
-
-            <div className="p-4 bg-white/10 rounded-xl">
-                <h2 className="mb-2 font-semibold">Application Trend (Last 30 Days)</h2>
+            <section className="col-span-full">
+            <ChartCard title="Application Trend (Last 30 Days)">
                 <TrendChart data={mockData.monthly_applications} />
-            </div>
-        </div>
+            </ChartCard>
+            </section>
+        </article>
     );
 };
 
