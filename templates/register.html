@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Job Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-content">
+        <div class="content-container">
+            <div class="glass-container" style="max-width: 600px; margin: 2rem auto;">
+                
+                <!-- Logo Section -->
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <img src="{{ url_for('static', filename='images/app-logo.webp') }}" 
+                         alt="Job Tracker Logo" style="width: 150px;">
+                    <h2 style="margin-top: 1rem; color: #ffffff;">Create Account</h2>
+                    <p style="color: rgba(255, 255, 255, 0.7);">Join Job Tracker to manage your applications</p>
+                </div>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px; 
+                                {% if category == 'error' %}background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;
+                                {% elif category == 'success' %}background: rgba(40, 167, 69, 0.2); border: 1px solid rgba(40, 167, 69, 0.5); color: #51cf66;
+                                {% else %}background: rgba(255, 193, 7, 0.2); border: 1px solid rgba(255, 193, 7, 0.5); color: #ffc107;
+                                {% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Registration Form -->
+                <form method="post" action="{{ url_for('register') }}" id="registerForm">
+                    
+                    <!-- Required Fields Section -->
+                    <h3 style="color: #ffffff; margin-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 0.5rem;">
+                        Required Information
+                    </h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" 
+                                   name="username" 
+                                   placeholder="Username *" 
+                                   class="form-input-application" 
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" 
+                                   name="email" 
+                                   placeholder="Email *" 
+                                   class="form-input-application" 
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="password" 
+                                   name="password" 
+                                   placeholder="Password * (min 6 characters)" 
+                                   class="form-input-application" 
+                                   minlength="6"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" 
+                                   name="confirm_password" 
+                                   placeholder="Confirm Password *" 
+                                   class="form-input-application" 
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Optional Fields Section -->
+                    <h3 style="color: #ffffff; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 0.5rem;">
+                        Personal Information (Optional)
+                    </h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" 
+                                   name="first_name" 
+                                   placeholder="First Name" 
+                                   class="form-input-application">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" 
+                                   name="last_name" 
+                                   placeholder="Last Name" 
+                                   class="form-input-application">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" 
+                                   name="current_company" 
+                                   placeholder="Current Company" 
+                                   class="form-input-application">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" 
+                                   name="current_salary" 
+                                   placeholder="Current Salary (k)" 
+                                   class="form-input-application">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="number" 
+                                   name="experience_years" 
+                                   placeholder="Years of Experience" 
+                                   class="form-input-application" 
+                                   min="0">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" 
+                                   name="tech_stack" 
+                                   placeholder="Tech Stack (e.g., Python, React, AWS)" 
+                                   class="form-input-application">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div style="margin-top: 2rem; margin-bottom: 1rem;">
+                        <button type="submit" 
+                                class="btn-primary" 
+                                style="width: 100%;"
+                                id="registerBtn">
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Login Link -->
+                <div style="text-align: center; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                    <p style="color: rgba(255, 255, 255, 0.7);">
+                        Already have an account? 
+                        <a href="{{ url_for('login') }}" 
+                           style="color: rgba(19, 236, 171, 1); text-decoration: none; font-weight: 600;">
+                            Sign in here
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FontAwesome Icons -->
+    <script src="https://kit.fontawesome.com/968be355d7.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const passwordInput = document.querySelector('input[name="password"]');
+            const confirmPasswordInput = document.querySelector('input[name="confirm_password"]');
+            const registerBtn = document.getElementById('registerBtn');
+
+            // Password confirmation validation
+            function validatePasswords() {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (password.length > 0 && confirmPassword.length > 0) {
+                    if (password !== confirmPassword) {
+                        confirmPasswordInput.setCustomValidity('Passwords do not match');
+                        confirmPasswordInput.style.borderColor = 'rgba(220, 53, 69, 0.8)';
+                    } else {
+                        confirmPasswordInput.setCustomValidity('');
+                        confirmPasswordInput.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    }
+                }
+            }
+
+            passwordInput.addEventListener('input', validatePasswords);
+            confirmPasswordInput.addEventListener('input', validatePasswords);
+
+            // Form submission
+            form.addEventListener('submit', function() {
+                registerBtn.textContent = 'Creating Account...';
+                registerBtn.disabled = true;
+            });
+        });
+    </script>
+</body>
+</html>

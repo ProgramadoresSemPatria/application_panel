@@ -40,16 +40,14 @@ Available blocks for child templates:
     ========================================================================
     Contains the main navigation and logo. Uses glassmorphism styling
     with sticky positioning for consistent access across all pages.
+    Only shows navigation when user is logged in.
     ========================================================================
     -->
+    {% if session.get('user_id') %}
     <header class="header">
         <div class="header-container">
             
-            <!-- 
-            Logo Section
-            ============
-            Clickable logo that links back to the home page
-            -->
+            <!-- Logo Section -->
             <div class="logo">
                 <a href="{{ url_for('home') }}">
                     <img src="{{ url_for('static', filename='images/app-logo.webp') }}" 
@@ -57,18 +55,14 @@ Available blocks for child templates:
                 </a>
             </div>
             
-            <!-- 
-            Navigation Menu
-            ===============
-            Main navigation with dynamic active state highlighting.
-            Uses Flask's request.endpoint to determine current page.
-            -->
+            <!-- Main Navigation Menu -->
             <nav class="nav-menu">
                 <ul class="nav-list">
                     <!-- Home Navigation Link -->
                     <li class="nav-item">
                         <a href="{{ url_for('home') }}" 
                            class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">
+                            <i class="fa-solid fa-home"></i>
                             Home
                         </a>
                     </li>
@@ -77,6 +71,7 @@ Available blocks for child templates:
                     <li class="nav-item">
                         <a href="{{ url_for('applications') }}" 
                            class="nav-link {% if request.endpoint == 'applications' %}active{% endif %}">
+                            <i class="fa-solid fa-briefcase"></i>
                             Applications
                         </a>
                     </li>
@@ -85,6 +80,7 @@ Available blocks for child templates:
                     <li class="nav-item">
                         <a href="{{ url_for('platforms') }}" 
                            class="nav-link {% if request.endpoint == 'platforms' %}active{% endif %}">
+                            <i class="fa-solid fa-globe"></i>
                             Platforms
                         </a>
                     </li>
@@ -93,13 +89,47 @@ Available blocks for child templates:
                     <li class="nav-item">
                         <a href="{{ url_for('settings') }}" 
                            class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}">
+                            <i class="fa-solid fa-cog"></i>
                             Settings
                         </a>
                     </li>
                 </ul>
             </nav>
+
+            <!-- User Menu -->
+            <div class="user-menu">
+                <div class="user-dropdown">
+                    <!-- User Info Button -->
+                    <button class="user-btn" id="userMenuBtn">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <span>{{ session.get('first_name', session.get('username', 'User')) }}</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="user-dropdown-menu" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-info">
+                                <strong>{{ session.get('first_name', session.get('username')) }} {{ session.get('last_name', '') }}</strong>
+                                <small>{{ session.get('email') }}</small>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ url_for('profile') }}" class="dropdown-item">
+                            <i class="fa-solid fa-user"></i>
+                            Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ url_for('logout') }}" class="dropdown-item logout">
+                            <i class="fa-solid fa-sign-out-alt"></i>
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
+    {% endif %}
 
     <!--
     ========================================================================
@@ -125,10 +155,11 @@ Available blocks for child templates:
     ========================================================================
     FOOTER SECTION
     ========================================================================
-    Simple footer with attribution link. Uses consistent styling
-    with the glassmorphism theme.
+    Simple footer with attribution link. Only shows when user is logged in.
+    Uses consistent styling with the glassmorphism theme.
     ========================================================================
     -->
+    {% if session.get('user_id') %}
     <footer class="footer">
         <div class="footer-container">
             <p class="footer-text">
@@ -142,6 +173,7 @@ Available blocks for child templates:
             </p>
         </div>
     </footer>
+    {% endif %}
 
     <!--
     ========================================================================
@@ -152,25 +184,120 @@ Available blocks for child templates:
     ========================================================================
     -->
     
-    <!-- 
-    Optional JavaScript Block
-    ========================
-    Child templates can add their own JavaScript by extending this block.
-    This allows for page-specific functionality while maintaining the
-    base template's core JavaScript.
-    -->
+    <!-- Page-specific JavaScript Block -->
     {% block scripts %}
     <!-- Page-specific JavaScript will be inserted here -->
     {% endblock %}
     
-    <!-- 
-    FontAwesome Icons CDN
-    ====================
-    Provides icon fonts used throughout the application for UI elements,
-    buttons, and visual indicators.
-    -->
+    <!-- FontAwesome Icons CDN -->
     <script src="https://kit.fontawesome.com/968be355d7.js" 
             crossorigin="anonymous"></script>
-   
+
+    <!-- Base JavaScript for User Menu (only when logged in) -->
+    {% if session.get('user_id') %}
+    <script>
+        /**
+         * User Menu Dropdown Functionality
+         * Handles the user dropdown menu in the header
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userDropdown = document.getElementById('userDropdown');
+
+            if (userMenuBtn && userDropdown) {
+                // Toggle dropdown on button click
+                userMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('show');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                        userDropdown.classList.remove('show');
+                    }
+                });
+
+                // Close dropdown on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        userDropdown.classList.remove('show');
+                    }
+                });
+            }
+        });
+
+        /**
+         * Mobile Menu Functionality
+         * Handles responsive navigation for mobile devices
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create mobile menu toggle if screen is small
+            function handleMobileMenu() {
+                const header = document.querySelector('.header-container');
+                const navMenu = document.querySelector('.nav-menu');
+                
+                if (window.innerWidth <= 768) {
+                    // Add mobile menu toggle if not exists
+                    if (!document.querySelector('.mobile-menu-toggle')) {
+                        const mobileToggle = document.createElement('button');
+                        mobileToggle.className = 'mobile-menu-toggle';
+                        mobileToggle.innerHTML = `
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                            <span class="hamburger-line"></span>
+                        `;
+                        
+                        // Insert before user menu
+                        const userMenu = document.querySelector('.user-menu');
+                        header.insertBefore(mobileToggle, userMenu);
+                        
+                        // Add click event
+                        mobileToggle.addEventListener('click', function() {
+                            this.classList.toggle('mobile-menu-active');
+                            navMenu.classList.toggle('mobile-menu-open');
+                        });
+                    }
+                }
+            }
+
+            // Initial check
+            handleMobileMenu();
+
+            // Check on resize
+            window.addEventListener('resize', handleMobileMenu);
+        });
+    </script>
+    {% endif %}
+
+    <!-- Auto-logout functionality for security -->
+    {% if session.get('user_id') %}
+    <script>
+        /**
+         * Auto-logout after inactivity
+         * Logs out user after 2 hours of inactivity
+         */
+        let inactivityTimer;
+        const INACTIVITY_TIME = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(function() {
+                alert('You have been logged out due to inactivity.');
+                window.location.href = "{{ url_for('logout') }}";
+            }, INACTIVITY_TIME);
+        }
+
+        // Reset timer on user activity
+        document.addEventListener('mousedown', resetInactivityTimer);
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keypress', resetInactivityTimer);
+        document.addEventListener('scroll', resetInactivityTimer);
+        document.addEventListener('touchstart', resetInactivityTimer);
+
+        // Initial timer start
+        resetInactivityTimer();
+    </script>
+    {% endif %}
 </body>
 </html>

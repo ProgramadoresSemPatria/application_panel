@@ -1639,6 +1639,597 @@ select.form-input-application option {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* ====================================================================
+   USER MENU AND AUTHENTICATION STYLES
+==================================================================== */
+
+/* User Menu Container */
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* User Dropdown Container */
+.user-dropdown {
+    position: relative;
+}
+
+/* User Menu Button */
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.user-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.user-btn i:first-child {
+    font-size: 1.2rem;
+}
+
+.user-btn i:last-child {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.user-btn:hover i:last-child {
+    transform: rotate(180deg);
+}
+
+/* User Dropdown Menu */
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    min-width: 200px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.user-dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Dropdown Header */
+.dropdown-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-info strong {
+    display: block;
+    color: #ffffff;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.user-info small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+}
+
+/* Dropdown Divider */
+.dropdown-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0.5rem 0;
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.dropdown-item.logout {
+    color: #ff6b6b;
+}
+
+.dropdown-item.logout:hover {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff5252;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 0.9rem;
+}
+
+/* ====================================================================
+   MOBILE MENU STYLES
+==================================================================== */
+
+/* Mobile Menu Toggle Button */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 0.3rem;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Menu Animation */
+.mobile-menu-toggle.mobile-menu-active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-toggle.mobile-menu-active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.mobile-menu-active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.95);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        transform: translateY(-100vh);
+        transition: transform 0.3s ease;
+        z-index: 999;
+    }
+
+    .nav-menu.mobile-menu-open {
+        transform: translateY(0);
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+    }
+
+    .nav-link {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+
+    .header-container {
+        position: relative;
+    }
+
+    .user-dropdown-menu {
+        right: 1rem;
+        min-width: 180px;
+    }
+}
+
+/* ====================================================================
+   ALERT STYLES FOR FLASH MESSAGES
+==================================================================== */
+
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid;
+    backdrop-filter: blur(10px);
+}
+
+.alert-success {
+    background: rgba(40, 167, 69, 0.2);
+    border-color: rgba(40, 167, 69, 0.5);
+    color: #51cf66;
+}
+
+.alert-error {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.5);
+    color: #ff6b6b;
+}
+
+.alert-info {
+    background: rgba(52, 152, 219, 0.2);
+    border-color: rgba(52, 152, 219, 0.5);
+    color: #4dabf7;
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.5);
+    color: #ffc107;
+}
+
+/* ====================================================================
+   FORM ENHANCEMENTS FOR AUTHENTICATION
+==================================================================== */
+
+/* Form Labels */
+label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Enhanced Form Validation States */
+.form-input-application:invalid {
+    border-color: rgba(220, 53, 69, 0.6);
+}
+
+.form-input-application:valid {
+    border-color: rgba(40, 167, 69, 0.6);
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.strength-bar.weak {
+    background: #ff6b6b;
+}
+
+.strength-bar.medium {
+    background: #ffc107;
+}
+
+.strength-bar.strong {
+    background: #51cf66;
+}
+
+/* Unsaved Changes Indicator */
+.unsaved-changes {
+    background: rgba(255, 193, 7, 0.8) !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+    }
+}
+
+/* ====================================================================
+   LOGIN/REGISTER PAGE SPECIFIC STYLES
+==================================================================== */
+
+/* Centered Auth Container */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Auth Form Container */
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo in Auth Forms */
+.auth-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo img {
+    width: 120px;
+    height: auto;
+}
+
+.auth-logo h2 {
+    color: #ffffff;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.auth-logo p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Auth Links */
+.auth-link {
+    color: rgba(19, 236, 171, 1);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.auth-link:hover {
+    color: rgba(19, 236, 171, 0.8);
+    text-decoration: underline;
+}
+
+/* Section Headers in Forms */
+.form-section-header {
+    color: #ffffff;
+    margin: 2rem 0 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ====================================================================
+   RESPONSIVE DESIGN FOR AUTHENTICATION
+==================================================================== */
+
+@media (max-width: 768px) {
+    .auth-form {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-group {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .form-input-application {
+        width: 100%;
+    }
+
+    .auth-logo h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* ====================================================================
+   LOADING STATES
+==================================================================== */
+
+.btn-loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ====================================================================
+   NAVIGATION ICONS
+==================================================================== */
+
+.nav-link i {
+    margin-right: 0.5rem;
+    width: 16px;
+    text-align: center;
+}
+
+/* ====================================================================
+   PROFILE PAGE SPECIFIC STYLES
+==================================================================== */
+
+.profile-section {
+    margin-bottom: 2rem;
+}
+
+.profile-section h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.profile-section h4 i {
+    color: rgba(19, 236, 171, 1);
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.profile-stat {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.profile-stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgba(19, 236, 171, 1);
+    margin-bottom: 0.5rem;
+}
+
+.profile-stat-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+/* ====================================================================
+   ACCESSIBILITY IMPROVEMENTS
+==================================================================== */
+
+/* Focus styles for better accessibility */
+.nav-link:focus,
+.user-btn:focus,
+.dropdown-item:focus,
+.form-input-application:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
+.btn-danger:focus {
+    outline: 2px solid rgba(19, 236, 171, 0.6);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .glass-container,
+    .auth-form,
+    .user-dropdown-menu {
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-link.active {
+        background: rgba(19, 236, 171, 0.9);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ====================================================================
+   DARK MODE ENHANCEMENTS
+==================================================================== */
+
+/* Enhanced dark theme for better readability */
+@media (prefers-color-scheme: dark) {
+    .form-input-application {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+    }
+    
+    .form-input-application::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* ====================================================================
+   PRINT STYLES
+==================================================================== */
+
+@media print {
+    .header,
+    .footer,
+    .user-menu,
+    .mobile-menu-toggle,
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger,
+    .nav-menu {
+        display: none !important;
+    }
+    
+    .main-content {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .glass-container {
+        background: white;
+        color: black;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+}
+
 /*
 ======================================================================
 END OF STYLESHEET

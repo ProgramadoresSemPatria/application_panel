@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Job Tracker{% endblock %}
+
+{% block content %}
+<div class="platform-box">
+    <div class="item-platform">
+        <!-- Page Header -->
+        <h3 class="box_title">User Profile</h3>
+        
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="glass-container" style="margin-bottom: 1rem;">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px; 
+                            {% if category == 'error' %}background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;
+                            {% elif category == 'success' %}background: rgba(40, 167, 69, 0.2); border: 1px solid rgba(40, 167, 69, 0.5); color: #51cf66;
+                            {% else %}background: rgba(255, 193, 7, 0.2); border: 1px solid rgba(255, 193, 7, 0.5); color: #ffc107;
+                            {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Profile Information Form -->
+        <div class="glass-container">
+            <h4 style="color: #ffffff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-user"></i>
+                Profile Information
+            </h4>
+            
+            <form method="post" action="{{ url_for('update_profile') }}" class="form_applications">
+                <!-- Personal Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">First Name</label>
+                        <input type="text" 
+                               name="first_name" 
+                               value="{{ user.first_name or '' }}" 
+                               class="form-input-application">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Last Name</label>
+                        <input type="text" 
+                               name="last_name" 
+                               value="{{ user.last_name or '' }}" 
+                               class="form-input-application">
+                    </div>
+                </div>
+
+                <!-- Account Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Username</label>
+                        <input type="text" 
+                               value="{{ user.username }}" 
+                               class="form-input-application" 
+                               disabled
+                               style="opacity: 0.6;">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Email</label>
+                        <input type="email" 
+                               name="email" 
+                               value="{{ user.email }}" 
+                               class="form-input-application" 
+                               required>
+                    </div>
+                </div>
+
+                <!-- Professional Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Current Company</label>
+                        <input type="text" 
+                               name="current_company" 
+                               value="{{ user.current_company or '' }}" 
+                               class="form-input-application">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Current Salary (k)</label>
+                        <input type="number" 
+                               name="current_salary" 
+                               value="{{ user.current_salary or '' }}" 
+                               class="form-input-application">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Years of Experience</label>
+                        <input type="number" 
+                               name="experience_years" 
+                               value="{{ user.experience_years or '' }}" 
+                               class="form-input-application" 
+                               min="0">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Tech Stack</label>
+                        <input type="text" 
+                               name="tech_stack" 
+                               value="{{ user.tech_stack or '' }}" 
+                               placeholder="e.g., Python, React, AWS" 
+                               class="form-input-application">
+                    </div>
+                </div>
+
+                <!-- Account Details -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Member Since</label>
+                        <input type="text" 
+                               value="{{ user.created_at.strftime('%B %d, %Y') if user.created_at else 'N/A' }}" 
+                               class="form-input-application" 
+                               disabled
+                               style="opacity: 0.6;">
+                    </div>
+                    <div class="form-group">
+                        <!-- Empty space for alignment -->
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-save"></i>
+                        Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Change Password Section -->
+        <div class="glass-container" style="margin-top: 2rem;">
+            <h4 style="color: #ffffff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-lock"></i>
+                Change Password
+            </h4>
+            
+            <form method="post" action="{{ url_for('change_password') }}" id="passwordForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Current Password</label>
+                        <input type="password" 
+                               name="current_password" 
+                               class="form-input-application" 
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <!-- Empty space for alignment -->
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">New Password</label>
+                        <input type="password" 
+                               name="new_password" 
+                               class="form-input-application" 
+                               minlength="6"
+                               placeholder="Min 6 characters"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; display: block;">Confirm New Password</label>
+                        <input type="password" 
+                               name="confirm_password" 
+                               class="form-input-application" 
+                               required>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button type="submit" class="btn-danger" id="changePasswordBtn">
+                        <i class="fa-solid fa-key"></i>
+                        Change Password
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="glass-container" style="margin-top: 2rem;">
+            <h4 style="color: #ffffff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-cog"></i>
+                Account Actions
+            </h4>
+            
+            <div style="text-align: center;">
+                <a href="{{ url_for('logout') }}" 
+                   class="btn-secondary" 
+                   style="display: inline-block; text-decoration: none; margin-right: 1rem;">
+                    <i class="fa-solid fa-sign-out-alt"></i>
+                    Sign Out
+                </a>
+                
+                <button type="button" 
+                        class="btn-danger" 
+                        onclick="alert('Account deletion feature coming soon!')">
+                    <i class="fa-solid fa-trash"></i>
+                    Delete Account
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/**
+ * Profile Form Validation and Enhancement
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordForm = document.getElementById('passwordForm');
+    const newPasswordInput = document.querySelector('input[name="new_password"]');
+    const confirmPasswordInput = document.querySelector('input[name="confirm_password"]');
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+
+    // Password confirmation validation
+    function validatePasswords() {
+        const newPassword = newPasswordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        if (newPassword.length > 0 && confirmPassword.length > 0) {
+            if (newPassword !== confirmPassword) {
+                confirmPasswordInput.setCustomValidity('Passwords do not match');
+                confirmPasswordInput.style.borderColor = 'rgba(220, 53, 69, 0.8)';
+            } else {
+                confirmPasswordInput.setCustomValidity('');
+                confirmPasswordInput.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }
+        }
+    }
+
+    // Add event listeners for real-time validation
+    if (newPasswordInput && confirmPasswordInput) {
+        newPasswordInput.addEventListener('input', validatePasswords);
+        confirmPasswordInput.addEventListener('input', validatePasswords);
+    }
+
+    // Form submission enhancement
+    passwordForm.addEventListener('submit', function() {
+        changePasswordBtn.textContent = 'Changing Password...';
+        changePasswordBtn.disabled = true;
+    });
+
+    // Auto-save indication for profile form
+    const profileInputs = document.querySelectorAll('form[action*="update_profile"] input');
+    profileInputs.forEach(input => {
+        if (!input.disabled) {
+            input.addEventListener('input', function() {
+                // Add visual indication that changes need to be saved
+                const saveBtn = document.querySelector('button[type="submit"]');
+                if (saveBtn && !saveBtn.classList.contains('unsaved-changes')) {
+                    saveBtn.classList.add('unsaved-changes');
+                    saveBtn.style.background = 'rgba(255, 193, 7, 0.8)';
+                    saveBtn.innerHTML = '<i class="fa-solid fa-exclamation-circle"></i> Save Changes';
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -4,3 +4,4 @@ functiondatabase.py
 Dockerfile
 data/
 requirements.txt
+.env
