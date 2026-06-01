@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Request, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from fastapi.responses import PlainTextResponse, RedirectResponse
 from fastapi_sso.sso.github import GithubSSO
 
@@ -9,6 +9,7 @@ from app.application.use_cases.user_registration import (
     UserRegistrationUseCase,
 )
 from app.config.settings import REFRESH_COOKIE_NAME, envs
+from app.core.rate_limit import RateLimit
 from app.core.tokens import (
     clear_access_cookie,
     clear_refresh_cookie,
@@ -98,6 +99,7 @@ async def auth_init():
     '/cli/start',
     response_model=CliLoginStartResponse,
     status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(RateLimit(5, 60, scope='ip'))],
 )
 async def cli_start(
     payload: CliLoginStartRequest,

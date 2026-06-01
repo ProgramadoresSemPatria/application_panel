@@ -15,6 +15,7 @@ from app.application.use_cases.get_current_user import GetCurrentUserUseCase
 from app.config.db import get_session
 from app.config.redis import get_redis
 from app.config.settings import ACCESS_COOKIE_NAME, envs
+from app.core.cache import Cache
 from app.core.exceptions import ForbiddenAccess
 from app.domain.repositories.admin_repository import AdminRepository
 from app.domain.repositories.application_repository import (
@@ -157,6 +158,13 @@ DiscordFeedbackServiceDp = Annotated[
 
 
 RedisDp = Annotated[aioredis.Redis, Depends(get_redis)]
+
+
+async def get_cache(redis: RedisDp) -> Cache:
+    return Cache(redis)
+
+
+CacheDp = Annotated[Cache, Depends(get_cache)]
 
 
 async def get_github_service(
